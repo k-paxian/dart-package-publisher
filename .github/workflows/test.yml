@@ -16,4 +16,4 @@ jobs:
           # Required:
           package: 'dart_json_mapper'
           # Optional:
-          relativePath: packages/mypackage/
+          relativePath: package
