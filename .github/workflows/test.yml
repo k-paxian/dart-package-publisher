@@ -1,0 +1,19 @@
+name: Workflow test
+on: push
+
+jobs:
+
+  package-publishing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 # required
+      - uses: k-paxian/dart-package-publisher@stable
+        with:
+          # Required:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          # Required:
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          # Required:
+          package: 'dart_json_mapper'
+          # Optional:
+          relativePath: packages/mypackage/
