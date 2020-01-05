@@ -30,7 +30,7 @@ switch_working_directory() {
 publish() {
   echo "Publish dart package to Pub"
   mkdir -p ~/.pub-cache
-  cat <<'EOF' > ~/.pub-cache/credentials.json
+  cat <<-EOF > ~/.pub-cache/credentials.json
   {
     "accessToken":"$ACCESS_TOKEN",
     "refreshToken":"$REFRESH_TOKEN",
