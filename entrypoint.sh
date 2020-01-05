@@ -32,8 +32,8 @@ switch_working_directory() {
 get_local_package_version() {
   pub get
   DEPS_OUT=`pub deps`
-  PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f4`
-  PACKAGE_META=`echo "$PACKAGE_INFO" | cut -d\r -f2`
+  PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f2`
+  PACKAGE_META=`expr "$PACKAGE_INFO" : '^.*$'`
   echo "$PACKAGE_META"
 }
 
