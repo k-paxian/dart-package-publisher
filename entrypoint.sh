@@ -29,9 +29,20 @@ switch_working_directory() {
 
 publish() {
   echo "Publish dart package to Pub"
+  mkdir -p ~/.pub-cache
+  cat <<EOF > ~/.pub-cache/credentials.json
+          {
+            "accessToken":"$ACCESS_TOKEN",
+            "refreshToken":"$REFRESH_TOKEN",
+            "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
+            "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
+            "expiration": 1577149838000
+          }
+  EOF
   pub publish --dry-run
-  pub publish -f
+  pub lish -f  
 }
 
 check_inputs
 switch_working_directory
+publish
