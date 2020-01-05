@@ -30,6 +30,7 @@ switch_working_directory() {
 }
 
 get_local_package_version() {
+  pub get
   DEPS_OUT=`pub deps`
   echo ">>>'$DEPS_OUT'"
 }
