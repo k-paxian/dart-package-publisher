@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 # required
-      - uses: k-paxian/dart-package-publisher@stable
+      - uses: k-paxian/dart-package-publisher@master
         with:
           # Required:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
