@@ -38,7 +38,7 @@ publish() {
     "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
     "expiration": 1577149838000
   }
-  EOF
+EOF
   pub publish --dry-run
   pub lish -f  
 }
