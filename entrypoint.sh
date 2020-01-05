@@ -29,6 +29,11 @@ switch_working_directory() {
   cd "$RELATIVE_PATH"
 }
 
+get_local_package_version() {
+  DRY_RUN_OUT=`pub publish --dry-run`
+  echo "'$DRY_RUN_OUT'"
+}
+
 publish() {
   echo "Publish dart package to Pub"
   mkdir -p ~/.pub-cache
@@ -47,4 +52,5 @@ EOF
 
 check_inputs
 switch_working_directory
-publish
+get_local_package_version
+#publish
