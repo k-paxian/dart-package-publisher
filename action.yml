@@ -1,12 +1,25 @@
-name: 'Container Action Template'
-description: 'Get started with Container actions'
-author: 'GitHub'
+name: 'Dart Package Publisher'
+description: 'Publish Dart Package To Pub.dev'
+author: 'k-paxian'
 inputs: 
-  myInput:
-    description: 'Input to use'
-    default: 'world'
+  accessToken:
+    description: 'Token from ~/.pub-cache/credentials.json. Use secrets.OAUTH_ACCESS_TOKEN'
+    required: true
+  refreshToken:
+    description: 'Token from ~/.pub-cache/credentials.json. Use secrets.OAUTH_REFRESH_TOKEN'
+    required: true
+  package:
+    description: 'Dart package name, from pubspec.yaml'
+    required: true
+  relativePath:
+    description: 'Path to your package root in your repository'
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.myInput }}
+    - ${{ inputs.accessToken }}
+    - ${{ inputs.refreshToken }}
+    - ${{ inputs.package }}
+    - ${{ inputs.relativePath }}    
