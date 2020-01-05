@@ -33,7 +33,7 @@ get_local_package_version() {
   pub get
   DEPS_OUT=`pub deps`
   PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f3`
-  PACKAGE_META=`echo "$PACKAGE_INFO" | awk '/(^.*$)/{print $1}' $1`
+  PACKAGE_META=`echo "$PACKAGE_INFO" | awk '/^.*$/{print $1}'`
   echo "$PACKAGE_META"
 }
 
