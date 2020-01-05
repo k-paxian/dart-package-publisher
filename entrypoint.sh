@@ -32,7 +32,7 @@ switch_working_directory() {
 get_local_package_version() {
   pub get
   DEPS_OUT=`pub deps`
-  PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f3`
+  PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f4`
   echo "$PACKAGE_INFO"
 }
 
