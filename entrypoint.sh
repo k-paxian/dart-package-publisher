@@ -33,7 +33,8 @@ get_local_package_version() {
   pub get
   DEPS_OUT=`pub deps`
   PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f4`
-  echo "$PACKAGE_INFO"
+  PACKAGE_META=`echo "$PACKAGE_INFO" | cut -d\n -f2`
+  echo "$PACKAGE_META"
 }
 
 publish() {
