@@ -30,8 +30,8 @@ switch_working_directory() {
 }
 
 get_local_package_version() {
-  DRY_RUN_OUT=`pub publish --dry-run`
-  echo "'$DRY_RUN_OUT'"
+  DEPS_OUT=`pub deps`
+  echo ">>>'$DEPS_OUT'"
 }
 
 publish() {
@@ -52,5 +52,5 @@ EOF
 
 check_inputs
 switch_working_directory
-get_local_package_version
+get_local_package_version || true
 #publish
