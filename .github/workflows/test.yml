@@ -14,6 +14,6 @@ jobs:
           # Required:
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           # Required:
-          package: 'dart_json_mapper'
+          package: 'test_package'
           # Optional:
           relativePath: package
