@@ -46,9 +46,8 @@ get_remote_package_version() {
 
 publish() {
   if [ "$LOCAL_PACKAGE_VERSION" = "$REMOTE_PACKAGE_VERSION" ]; then
-    echo "Remote & Local versions are equal, skip publishing"
+    echo "Remote & Local versions are equal, skip publishing."
   else
-    echo "Publish dart package to Pub"
     mkdir -p ~/.pub-cache
     cat <<-EOF > ~/.pub-cache/credentials.json
     {
@@ -60,8 +59,7 @@ publish() {
     }
 EOF
     pub publish --dry-run
-    cat ~/.pub-cache/credentials.json
-    #pub lish -f
+    pub lish -f
   fi  
 }
 
