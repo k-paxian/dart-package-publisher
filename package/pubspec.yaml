@@ -1,4 +1,4 @@
-name: dart_json_mapper
+name: test_package
 version: 1.0.0
 description: >
   This package is a test
@@ -6,10 +6,8 @@ homepage: https://github.com/k-paxian/dart-package-publisher
 environment:
   sdk: '>=2.6.1 <3.0.0'
 dependencies:
-  reflectable: ^2.2.1
   intl: ^0.16.0
 dev_dependencies:
   pedantic: ^1.9.0
   build_runner: any
-  build_test: any
   test: any
