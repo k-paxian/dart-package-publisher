@@ -8,8 +8,6 @@ REFRESH_TOKEN="$2"
 RELATIVE_PATH="$3"
 DRY_RUN_ONLY="$4"
 
-echo "dr run: $DRY_RUN_ONLY"
-
 check_inputs() {
   echo "Check inputs..."
   if [ -z "$ACCESS_TOKEN" ]; then
