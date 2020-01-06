@@ -1,9 +1,9 @@
 name: 'Dart Package Publisher'
-description: 'Publish Dart Package To Pub.dev'
+description: 'Continuously Publish Dart Package To Pub.dev'
 author: 'k-paxian'
 branding:
   color: 'blue'
-  icon: 'feather'
+  icon: 'arrow-up-circle'
 inputs: 
   accessToken:
     description: '(Required) Token from ~/.pub-cache/credentials.json. Use secrets.OAUTH_ACCESS_TOKEN'
