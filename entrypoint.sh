@@ -33,6 +33,7 @@ get_local_package_version() {
   #GET=`pub get`
   pub get
   OUT=`pub deps`
+  echo "$OUT"
   PACKAGE_INFO=`echo "$OUT" | cut -d\n -f3`
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
   lastIndex=`expr ${#lines[@]}-1`
