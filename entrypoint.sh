@@ -26,7 +26,7 @@ switch_working_directory() {
 }
 
 get_local_package_version() {
-  pub get
+  GET=`pub get`
   OUT=`pub deps`
   PACKAGE_INFO=`echo "$OUT" | cut -d\n -f3`
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
@@ -35,13 +35,13 @@ get_local_package_version() {
   PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`
   LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
   echo "Package: $PACKAGE"
-  echo "Local version: $LOCAL_PACKAGE_VERSION"
+  echo "Local version: "$LOCAL_PACKAGE_VERSION""
 }
 
 get_remote_package_version() {
   OUT=`pub global activate $PACKAGE`
   REMOTE_PACKAGE_VERSION=`echo "$OUT" | perl -n -e'/^Activated .* (.*)\./ && print $1'`
-  echo "Remote version: $REMOTE_PACKAGE_VERSION"
+  echo "Remote version: "$REMOTE_PACKAGE_VERSION""
 }
 
 publish() {
