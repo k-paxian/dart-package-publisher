@@ -38,8 +38,10 @@ get_local_package_version() {
 }
 
 get_remote_package_version() {
-  OUT=`pub global activate $PACKAGE`
+  REMOTE_PACKAGE_VERSION=""
+  OUT=`pub global activate pana`
   echo "$OUT"
+  echo "Remote version: $REMOTE_PACKAGE_VERSION"
 }
 
 publish() {
