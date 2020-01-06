@@ -36,6 +36,7 @@ get_local_package_version() {
   echo "PACKAGE_INFO: $PACKAGE_INFO"
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
   lastIndex=`expr ${#lines[@]}-1`
+  declare -p lines
   PACKAGE_INFO="${lines[$lastIndex]}"
   PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`
   LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
