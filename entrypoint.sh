@@ -32,7 +32,7 @@ switch_working_directory() {
 get_local_package_version() {
   GET=`pub get`
   OUT=`pub deps`
-  PACKAGE_INFO=`echo "$OUT" | cut -d'|' -f1 | cut -d'\'' -f1`
+  PACKAGE_INFO=`echo "$OUT" | cut -d'|' -f1 | cut -d"'" -f1`
   echo "PACKAGE_INFO: $PACKAGE_INFO"
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
   lastIndex=`expr ${#lines[@]}-1`
