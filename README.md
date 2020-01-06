@@ -1,6 +1,12 @@
 [![Build Status][ci-badge]][ci-badge-url]
 
-Continuously Publish Dart packages only **IF** local `pubspec.yml` has **different** version than already published on [Pub.dev](http://pub.dev) site.
+This Action is intended to Continuously Publish Dart packages only **IF** local `pubspec.yml` has **different** version than already published on [Pub.dev](http://pub.dev) site.
+
+It's handy to hook it up on `push, pull_request` [events][3].
+```yaml
+on: [push, pull_request]
+```
+and forget about it. When you need to publish a package, just update the version in `pubspec.yaml`.
 
 ## Inputs
 
@@ -68,3 +74,4 @@ jobs:
 [ci-badge-url]: https://github.com/k-paxian/dart-package-publisher/actions
 [1]: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets
 [2]: https://github.com/k-paxian/dart-json-mapper
+[3]: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events
