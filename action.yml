@@ -14,7 +14,7 @@ inputs:
   relativePath:
     description: 'Path to your package root in your repository'
     required: false
-    default: ''
+    default: '.'
   dryRunOnly:
     description: 'Perform dry run only, no real publishing'
     required: false
