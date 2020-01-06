@@ -40,7 +40,8 @@ get_local_package_version() {
 get_remote_package_version() {
   REMOTE_PACKAGE_VERSION=""
   OUT=`pub global activate pana`
-  echo "$OUT"
+  V=`echo "$OUT" | gawk 'match($0, /^Activated .* (.*)\./, a) {print a[1]}'`
+  echo "version: $V"
   echo "Remote version: $REMOTE_PACKAGE_VERSION"
 }
 
