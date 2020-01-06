@@ -33,9 +33,8 @@ get_local_package_version() {
   pub get
   DEPS_OUT=`pub deps`
   PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f3`
-  IFS=' '
+  IFS=' \n\r'
   read -a parts <<< "$PACKAGE_INFO"
-  echo "$parts"
   for val in "${parts[@]}";
   do
   printf "$val\n"
