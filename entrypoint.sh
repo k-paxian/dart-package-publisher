@@ -25,7 +25,8 @@ switch_working_directory() {
   echo "Switching to package directory '$RELATIVE_PATH'"
   cd "$RELATIVE_PATH"
   echo "Package dir: $PWD"
-  echo ls
+  contents=`echo ls`
+  echo "$contents"
 }
 
 get_local_package_version() {
