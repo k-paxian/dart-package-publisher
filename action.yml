@@ -15,10 +15,22 @@ inputs:
     description: 'Path to your package root in your repository'
     required: false
     default: ''
+  dryRunOnly:
+    description: 'Perform dry run only, no real publishing'
+    required: false
+    default: false
+outputs:
+  package:
+    description: 'Package name from pubspec'
+  localVersion:
+    description: 'Package local version from pubspec'
+  remoteVersion:
+    description: 'Package remote version from pub.dev'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.accessToken }}
     - ${{ inputs.refreshToken }}
-    - ${{ inputs.relativePath }}    
+    - ${{ inputs.relativePath }}
+    - ${{ inputs.dryRunOnly }}
