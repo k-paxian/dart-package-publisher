@@ -11,9 +11,6 @@ inputs:
   refreshToken:
     description: 'Token from ~/.pub-cache/credentials.json. Use secrets.OAUTH_REFRESH_TOKEN'
     required: true
-  package:
-    description: 'Dart package name, from pubspec.yaml'
-    required: true
   relativePath:
     description: 'Path to your package root in your repository'
     required: false
@@ -24,5 +21,4 @@ runs:
   args:
     - ${{ inputs.accessToken }}
     - ${{ inputs.refreshToken }}
-    - ${{ inputs.package }}
     - ${{ inputs.relativePath }}    
