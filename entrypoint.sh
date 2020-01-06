@@ -35,33 +35,37 @@ get_local_package_version() {
   PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`
   LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
   echo "Package: $PACKAGE"
-  echo "Local version: "$LOCAL_PACKAGE_VERSION""
+  echo "Local version: [$LOCAL_PACKAGE_VERSION]"
 }
 
 get_remote_package_version() {
   OUT=`pub global activate $PACKAGE`
   REMOTE_PACKAGE_VERSION=`echo "$OUT" | perl -n -e'/^Activated .* (.*)\./ && print $1'`
-  echo "Remote version: "$REMOTE_PACKAGE_VERSION""
+  echo "Remote version: [$REMOTE_PACKAGE_VERSION]"
 }
 
 publish() {
-  echo "Publish dart package to Pub"
-  mkdir -p ~/.pub-cache
-  cat <<-EOF > ~/.pub-cache/credentials.json
-  {
-    "accessToken":"$ACCESS_TOKEN",
-    "refreshToken":"$REFRESH_TOKEN",
-    "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
-    "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
-    "expiration": 1577149838000
-  }
+  if [ "$LOCAL_PACKAGE_VERSION" = "$REMOTE_PACKAGE_VERSION" ]; then
+    echo "Remote & Local versions are equal, skip publishing"
+  else
+    echo "Publish dart package to Pub"
+    mkdir -p ~/.pub-cache
+    cat <<-EOF > ~/.pub-cache/credentials.json
+    {
+      "accessToken":"$ACCESS_TOKEN",
+      "refreshToken":"$REFRESH_TOKEN",
+      "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
+      "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
+      "expiration": 1577149838000
+    }
 EOF
-  pub publish --dry-run
-  pub lish -f  
+    pub publish --dry-run
+    pub lish -f  
+  fi  
 }
 
 check_inputs
 switch_working_directory
 get_local_package_version || true
 get_remote_package_version || true
-#publish
+publish
