@@ -59,6 +59,7 @@ publish() {
       "expiration": 1577149838000
     }
 EOF
+    cat ~/.pub-cache/credentials.json
     pub publish --dry-run
     pub lish -f  
   fi  
@@ -68,4 +69,4 @@ check_inputs
 switch_working_directory
 get_local_package_version || true
 get_remote_package_version || true
-publish
+publish || true
