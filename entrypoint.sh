@@ -34,13 +34,7 @@ get_local_package_version() {
   DEPS_OUT=`pub deps`
   PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f3`
   IFS=$'\n\r' read -d '' -r -a parts <<< "$PACKAGE_INFO"
-  echo "${parts[@]}" 
-  echo "${parts[0]}" 
-  echo "${parts[1]}" 
-  #PACKAGE_META=`echo "$PACKAGE_INFO" | awk '/^.*$/{print $1}'`
-  #PACKAGE_META2=`echo "$PACKAGE_INFO" | awk '/^.*$/{print $2}'`
-  #echo "$PACKAGE_META"
-  #echo "$PACKAGE_META2"
+  echo "${parts[#parts[@]-1]}" 
 }
 
 publish() {
