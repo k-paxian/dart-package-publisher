@@ -22,6 +22,13 @@ check_inputs() {
 }
 
 switch_working_directory() {
+  echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+  echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+  echo "GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
+  echo "RUNNER_TEMP: $RUNNER_TEMP"
+  echo "RUNNER_WORKSPACE: $RUNNER_WORKSPACE"
+  echo "RUNNER_TOOL_CACHE: $RUNNER_TOOL_CACHE"
+  echo "HOME: $HOME"
   echo "Switching to package directory '$RELATIVE_PATH'"
   cd "$GITHUB_WORKSPACE"
   cd "$RELATIVE_PATH"
