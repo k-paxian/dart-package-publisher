@@ -39,7 +39,7 @@ get_local_package_version() {
 }
 
 get_remote_package_version() {
-  OUT=`pub global activate pana`
+  OUT=`pub global activate $PACKAGE`
   REMOTE_PACKAGE_VERSION=`echo "$OUT" | perl -n -e'/^Activated .* (.*)\./ && print $1'`
   echo "Remote version: $REMOTE_PACKAGE_VERSION"
 }
