@@ -60,8 +60,8 @@ publish() {
     }
 EOF
     pub publish --dry-run
-    less ~/.pub-cache/credentials.json
-    pub lish -f
+    cat ~/.pub-cache/credentials.json
+    #pub lish -f
   fi  
 }
 
