@@ -1,3 +1,70 @@
-# dart-package-publisher
+[![Build Status][ci-badge]][ci-badge-url]
 
-Publish Dart package **IF** local `pubspec.yml` has **different** version than already published on [Pub.dev](Pub.dev) site.
+Continuously Publish Dart packages only **IF** local `pubspec.yml` has **different** version than already published on [Pub.dev](http://pub.dev) site.
+
+## Inputs
+
+### `accessToken`
+
+**Required** Google Account token from `~/.pub-cache/credentials.json` 
+Put it as `secrets.OAUTH_ACCESS_TOKEN` on your repo [secrets section][1]
+
+You can find the credentials.json within `.pub-cache` in the User's home directory.
+You can use `open ~/.pub-cache`.
+
+### `refreshToken`
+
+**Required** Google Account token from `~/.pub-cache/credentials.json` 
+Put it as `secrets.OAUTH_REFRESH_TOKEN` on your repo [secrets section][1]
+
+You can find the credentials.json within `.pub-cache` in the User's home directory.
+You can use `open ~/.pub-cache`.
+
+### `relativePath`
+
+**Optional** Path to your package root in your repository. In case you have a mono-repo, like this [one][2]
+
+### `dryRunOnly`
+
+**Optional** Perform dry run only, no real publishing. Default: `false`
+
+## Outputs
+
+### `package`
+
+Package name from pubspec.
+
+### `localVersion`
+
+Package local version from pubspec.
+
+### `remoteVersion`
+
+Package remote version from pub.dev.
+
+
+## Example usage
+
+```yaml
+name: Publish to Pub.dev
+
+on: push
+
+jobs:
+  publishing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: '>> my package <<'
+      - uses: k-paxian/dart-package-publisher@master
+        with:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+```
+
+[ci-badge]: https://github.com/k-paxian/dart-package-publisher/workflows/Workflow%20test/badge.svg
+[ci-badge-url]: https://github.com/k-paxian/dart-package-publisher/actions
+[1]: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets
+[2]: https://github.com/k-paxian/dart-json-mapper
