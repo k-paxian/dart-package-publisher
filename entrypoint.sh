@@ -34,7 +34,9 @@ get_local_package_version() {
   DEPS_OUT=`pub deps`
   PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f3`
   IFS=$'\n\r' read -d '' -r -a parts <<< "$PACKAGE_INFO"
-  echo "${parts[#parts[@]-1]}" 
+  index=`expr ${#parts[@]}-1`
+  echo "$index"
+  echo "${parts[$index]}" 
 }
 
 publish() {
