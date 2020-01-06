@@ -33,12 +33,12 @@ get_local_package_version() {
   pub get
   DEPS_OUT=`pub deps`
   PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f3`
-  echo -e "$PACKAGE_INFO"
+  echo -e "00 $PACKAGE_INFO 00" | hexdump -C
   IFS='\n'
   read -a parts <<< "$PACKAGE_INFO"
   for val in "${parts[@]}";
   do
-  printf "$val\n"
+  #printf "$val\n"
   done
   #PACKAGE_META=`echo "$PACKAGE_INFO" | awk '/^.*$/{print $1}'`
   #PACKAGE_META2=`echo "$PACKAGE_INFO" | awk '/^.*$/{print $2}'`
