@@ -34,10 +34,10 @@ get_local_package_version() {
   DEPS_OUT=`pub deps`
   PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f3`
   #echo "$PACKAGE_INFO" | od -t x1
-  IFS=$'\n'
-  read -ra parts <<< "$PACKAGE_INFO"
+  IFS=$'\r'
+  read -a parts <<< "$PACKAGE_INFO"
   declare -p parts
-  declare -p PACKAGE_INFO
+  declare -a PACKAGE_INFO
   #PACKAGE_META=`echo "$PACKAGE_INFO" | awk '/^.*$/{print $1}'`
   #PACKAGE_META2=`echo "$PACKAGE_INFO" | awk '/^.*$/{print $2}'`
   #echo "$PACKAGE_META"
