@@ -6,6 +6,9 @@ export PATH="$PATH":"$HOME/.pub-cache/bin"
 ACCESS_TOKEN="$1"
 REFRESH_TOKEN="$2"
 RELATIVE_PATH="$3"
+DRY_RUN_ONLY="$4"
+
+echo "dr run: $DRY_RUN_ONLY"
 
 check_inputs() {
   echo "Check inputs..."
@@ -45,6 +48,9 @@ get_remote_package_version() {
 }
 
 publish() {
+  echo "::set-output name=package::$PACKAGE"
+  echo "::set-output name=localVersion::$LOCAL_PACKAGE_VERSION"
+  echo "::set-output name=remoteVersion::$REMOTE_PACKAGE_VERSION"
   if [ "$LOCAL_PACKAGE_VERSION" = "$REMOTE_PACKAGE_VERSION" ]; then
     echo "Remote & Local versions are equal, skip publishing."
   else
@@ -59,7 +65,11 @@ publish() {
     }
 EOF
     pub publish --dry-run
-    pub lish -f
+    if [ "$DRY_RUN_ONLY" = "true" ]; then
+      echo "Dry run only, skip publishing."
+    else
+      pub lish -f
+    fi
   fi  
 }
 
