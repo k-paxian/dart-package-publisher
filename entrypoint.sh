@@ -4,8 +4,7 @@ set -e
 
 ACCESS_TOKEN="$1"
 REFRESH_TOKEN="$2"
-PACKAGE="$3"
-RELATIVE_PATH="$4"
+RELATIVE_PATH="$3"
 
 check_inputs() {
   echo "Check inputs..."
@@ -15,10 +14,6 @@ check_inputs() {
   fi
   if [ -z "$REFRESH_TOKEN" ]; then
     echo "Missing refreshToken"
-    exit 1
-  fi
-  if [ -z "$PACKAGE" ]; then
-    echo "Missing package name"
     exit 1
   fi
   echo "OK"
@@ -31,15 +26,20 @@ switch_working_directory() {
 
 get_local_package_version() {
   pub get
-  DEPS_OUT=`pub deps`
-  PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f3`
+  OUT=`pub deps`
+  PACKAGE_INFO=`echo "$OUT" | cut -d\n -f3`
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
   lastIndex=`expr ${#lines[@]}-1`
   PACKAGE_INFO="${lines[$lastIndex]}"
   PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`
   LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
-  echo "pkg: $PACKAGE"
-  echo "v: $LOCAL_PACKAGE_VERSION"
+  echo "Package: $PACKAGE"
+  echo "Local version: $LOCAL_PACKAGE_VERSION"
+}
+
+get_remote_package_version() {
+  OUT=`pub global activate $PACKAGE`
+  echo "$OUT"
 }
 
 publish() {
@@ -61,4 +61,5 @@ EOF
 check_inputs
 switch_working_directory
 get_local_package_version || true
+get_remote_package_version || true
 #publish
