@@ -23,8 +23,8 @@ check_inputs() {
 
 switch_working_directory() {
   echo "Switching to package directory '$RELATIVE_PATH'"
-  cd "$RELATIVE_PATH"  
-  echo "Runner dir: $RUNNER_WORKSPACE"
+  cd "$GITHUB_WORKSPACE"
+  cd "$RELATIVE_PATH"
   echo "Package dir: $PWD"
 }
 
