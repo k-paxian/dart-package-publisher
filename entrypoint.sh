@@ -2,6 +2,7 @@
 
 set -e
 
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 ACCESS_TOKEN="$1"
 REFRESH_TOKEN="$2"
 RELATIVE_PATH="$3"
@@ -38,10 +39,8 @@ get_local_package_version() {
 }
 
 get_remote_package_version() {
-  REMOTE_PACKAGE_VERSION=""
   OUT=`pub global activate pana`
-  V=`echo "$OUT" | perl -n -e'/^Activated .* (.*)\./ && print $1'`
-  echo "version: $V"
+  REMOTE_PACKAGE_VERSION=`echo "$OUT" | perl -n -e'/^Activated .* (.*)\./ && print $1'`
   echo "Remote version: $REMOTE_PACKAGE_VERSION"
 }
 
