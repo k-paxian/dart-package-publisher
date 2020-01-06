@@ -33,10 +33,13 @@ get_local_package_version() {
   pub get
   DEPS_OUT=`pub deps`
   PACKAGE_INFO=`echo "$DEPS_OUT" | cut -d\n -f3`
-  IFS=$'\n\r' read -d '' -r -a parts <<< "$PACKAGE_INFO"
-  index=`expr ${#parts[@]}-1`
-  echo "$index"
-  echo "${parts[$index]}" 
+  IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
+  lastIndex=`expr ${#lines[@]}-1`
+  PACKAGE_INFO="${lines[$lastIndex]}"
+  PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`
+  LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
+  echo "pkg: $PACKAGE"
+  echo "v: $LOCAL_PACKAGE_VERSION"
 }
 
 publish() {
