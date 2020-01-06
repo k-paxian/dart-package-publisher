@@ -36,10 +36,8 @@ get_local_package_version() {
   #echo "$PACKAGE_INFO" | od -t x1
   IFS=$'\n'
   read -a parts <<< "$PACKAGE_INFO"
-  for val in "${parts[@]}";
-  do
-  printf "$val\n"
-  done
+  echo "$parts[0]"
+  echo "$parts[1]"
   #PACKAGE_META=`echo "$PACKAGE_INFO" | awk '/^.*$/{print $1}'`
   #PACKAGE_META2=`echo "$PACKAGE_INFO" | awk '/^.*$/{print $2}'`
   #echo "$PACKAGE_META"
