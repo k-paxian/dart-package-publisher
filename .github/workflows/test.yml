@@ -13,7 +13,5 @@ jobs:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           # Required:
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-          # Required:
-          package: 'test_package'
           # Optional:
           relativePath: package
