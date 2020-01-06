@@ -59,9 +59,9 @@ publish() {
       "expiration": 1577149838000
     }
 EOF
-    cat ~/.pub-cache/credentials.json
     pub publish --dry-run
-    pub lish -f  
+    less ~/.pub-cache/credentials.json
+    pub lish -f
   fi  
 }
 
