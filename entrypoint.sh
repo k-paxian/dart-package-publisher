@@ -30,7 +30,7 @@ switch_working_directory() {
   echo "RUNNER_TOOL_CACHE: $RUNNER_TOOL_CACHE"
   echo "HOME: $HOME"
   echo "Switching to package directory '$RELATIVE_PATH'"
-  cd "$GITHUB_WORKSPACE"
+  cd "$RUNNER_WORKSPACE"
   cd "$RELATIVE_PATH"
   echo "Package dir: $PWD"
 }
