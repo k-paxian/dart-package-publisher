@@ -6,17 +6,17 @@ branding:
   icon: 'feather'
 inputs: 
   accessToken:
-    description: 'Token from ~/.pub-cache/credentials.json. Use secrets.OAUTH_ACCESS_TOKEN'
+    description: '(Required) Token from ~/.pub-cache/credentials.json. Use secrets.OAUTH_ACCESS_TOKEN'
     required: true
   refreshToken:
-    description: 'Token from ~/.pub-cache/credentials.json. Use secrets.OAUTH_REFRESH_TOKEN'
+    description: '(Required) Token from ~/.pub-cache/credentials.json. Use secrets.OAUTH_REFRESH_TOKEN'
     required: true
   relativePath:
-    description: 'Path to your package root in your repository'
+    description: '(Optional) Path to your package root in your repository'
     required: false
     default: '.'
   dryRunOnly:
-    description: 'Perform dry run only, no real publishing'
+    description: '(Optional) Perform dry run only, no real publishing'
     required: false
     default: false
 outputs:
