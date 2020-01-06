@@ -30,7 +30,8 @@ switch_working_directory() {
 }
 
 get_local_package_version() {
-  GET=`pub get`
+  #GET=`pub get`
+  pub get
   OUT=`pub deps`
   PACKAGE_INFO=`echo "$OUT" | cut -d\n -f3`
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
@@ -40,6 +41,10 @@ get_local_package_version() {
   LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
   echo "Package: $PACKAGE"
   echo "Local version: [$LOCAL_PACKAGE_VERSION]"
+  if [ -z "$PACKAGE" ]; then
+    echo "No package found. :("
+    exit 0
+  fi  
 }
 
 get_remote_package_version() {
