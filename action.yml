@@ -3,7 +3,7 @@ description: 'Continuously Publish Dart Package To Pub.dev'
 author: 'k-paxian'
 branding:
   color: 'blue'
-  icon: 'arrow-up-circle'
+  icon: 'package'
 inputs: 
   accessToken:
     description: '(Required) Token from ~/.pub-cache/credentials.json. Use secrets.OAUTH_ACCESS_TOKEN'
