@@ -50,6 +50,8 @@ run_unit_tests() {
       echo "Skip unit tests set to true, skip unit tests."
     else
       if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ]; then
+        echo "build_runner: $HAS_BUILD_RUNNER"
+        echo "build_test: $HAS_BUILD_TEST"
         pub run build_runner test
       else
         pub run test
