@@ -26,6 +26,7 @@ switch_working_directory() {
 get_local_package_version() {
   GET=`pub get`
   HAS_BUILD_RUNNER=`echo "$GET" | perl -n -e'/^\+ build_runner (.*)/ && print $1'`
+  HAS_BUILD_TEST=`echo "$GET" | perl -n -e'/^\+ build_test (.*)/ && print $1'`
   HAS_TEST=`echo "$GET" | perl -n -e'/^\+ test (.*)/ && print $1'`
   OUT=`pub deps`
   PACKAGE_INFO=`echo "$OUT" | cut -d'|' -f1 | cut -d"'" -f1 | sed '/^\s*$/d'`
@@ -48,7 +49,7 @@ run_unit_tests() {
     if [ "$INPUT_SKIPTESTS" = "true" ]; then
       echo "Skip unit tests set to true, skip unit tests."
     else
-      if [ "$HAS_BUILD_RUNNER" != "" ]; then
+      if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ]; then
         pub run build_runner test
       else
         pub run test
