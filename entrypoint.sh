@@ -47,14 +47,18 @@ get_local_package_version() {
 
 run_unit_tests() {
     if [ "$INPUT_SKIPTESTS" = "true" ]; then
-      echo "Skip unit tests set to true, skip unit tests."
+      echo "Skip unit tests set to true, skip unit testing."
     else
       if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ]; then
         echo "build_runner: $HAS_BUILD_RUNNER"
         echo "build_test: $HAS_BUILD_TEST"
         pub run build_runner test
       else
-        pub run test
+        if [ "$HAS_TEST" != "" ]; then
+          pub run test
+        else
+          echo "No unit test related dependencies detected, skip unit testing."
+        fi      
       fi      
     fi
 }
