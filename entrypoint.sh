@@ -3,18 +3,14 @@
 set -e
 
 export PATH="$PATH":"$HOME/.pub-cache/bin"
-ACCESS_TOKEN="$1"
-REFRESH_TOKEN="$2"
-RELATIVE_PATH="$3"
-DRY_RUN_ONLY="$4"
 
 check_inputs() {
   echo "Check inputs..."
-  if [ -z "$ACCESS_TOKEN" ]; then
+  if [ -z "$INPUT_ACCESSTOKEN" ]; then
     echo "Missing accessToken"
     exit 1
   fi
-  if [ -z "$REFRESH_TOKEN" ]; then
+  if [ -z "$INPUT_REFRESHTOKEN" ]; then
     echo "Missing refreshToken"
     exit 1
   fi
@@ -22,13 +18,15 @@ check_inputs() {
 }
 
 switch_working_directory() {
-  echo "Switching to package directory '$RELATIVE_PATH'"
-  cd "$RELATIVE_PATH"
+  echo "Switching to package directory '$INPUT_RELATIVEPATH'"
+  cd "$INPUT_RELATIVEPATH"
   echo "Package dir: $PWD"
 }
 
 get_local_package_version() {
   GET=`pub get`
+  HAS_BUILD_RUNNER=`echo "$GET" | perl -n -e'/^\+ build_runner (.*)/ && print $1'`
+  HAS_TEST=`echo "$GET" | perl -n -e'/^\+ test (.*)/ && print $1'`
   OUT=`pub deps`
   PACKAGE_INFO=`echo "$OUT" | cut -d'|' -f1 | cut -d"'" -f1 | sed '/^\s*$/d'`
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
@@ -42,33 +40,45 @@ get_local_package_version() {
     echo "No package found. :("
     exit 0
   fi  
+  echo "::set-output name=package::$PACKAGE"
+  echo "::set-output name=localVersion::$LOCAL_PACKAGE_VERSION"
+}
+
+run_unit_tests() {
+    if [ "$INPUT_SKIPTESTS" = "true" ]; then
+      echo "Skip unit tests set to true, skip unit tests."
+    else
+      if [ "$HAS_BUILD_RUNNER" != "" ]; then
+        pub run build_runner test
+      else
+        pub run test
+      fi      
+    fi
 }
 
 get_remote_package_version() {
   OUT=`pub global activate $PACKAGE`
   REMOTE_PACKAGE_VERSION=`echo "$OUT" | perl -n -e'/^Activated .* (.*)\./ && print $1'`
   echo "Remote version: [$REMOTE_PACKAGE_VERSION]"
+  echo "::set-output name=remoteVersion::$REMOTE_PACKAGE_VERSION"
 }
 
-publish() {
-  echo "::set-output name=package::$PACKAGE"
-  echo "::set-output name=localVersion::$LOCAL_PACKAGE_VERSION"
-  echo "::set-output name=remoteVersion::$REMOTE_PACKAGE_VERSION"
+publish() {  
   if [ "$LOCAL_PACKAGE_VERSION" = "$REMOTE_PACKAGE_VERSION" ]; then
     echo "Remote & Local versions are equal, skip publishing."
   else
     mkdir -p ~/.pub-cache
     cat <<-EOF > ~/.pub-cache/credentials.json
     {
-      "accessToken":"$ACCESS_TOKEN",
-      "refreshToken":"$REFRESH_TOKEN",
+      "accessToken":"$INPUT_ACCESSTOKEN",
+      "refreshToken":"$INPUT_REFRESHTOKEN",
       "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
       "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
       "expiration": 1577149838000
     }
 EOF
     pub publish --dry-run
-    if [ "$DRY_RUN_ONLY" = "true" ]; then
+    if [ "$INPUT_DRYRUNONLY" = "true" ]; then
       echo "Dry run only, skip publishing."
     else
       pub lish -f
@@ -79,5 +89,6 @@ EOF
 check_inputs
 switch_working_directory
 get_local_package_version || true
+run_unit_tests
 get_remote_package_version || true
 publish || true
