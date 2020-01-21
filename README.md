@@ -34,6 +34,10 @@ You can use `open ~/.pub-cache`.
 
 **Optional** Perform dry run only, no real publishing. Default: `false`
 
+### `skipTests`
+
+**Optional** . Skip unit tests run. Default: `false`
+
 ## Outputs
 
 ### `package`
