@@ -1,6 +1,6 @@
 [![Build Status][ci-badge]][ci-badge-url]
 
-This Action is intended to Continuously Publish Dart packages only **IF** local `pubspec.yml` has **different** version than already published on [Pub.dev](http://pub.dev) site.
+This Action is intended to Continuously Test & Publish Dart packages only **IF** local `pubspec.yml` has **different** version than already published on [Pub.dev](http://pub.dev) site.
 
 It's handy to hook it up on `push, pull_request` [events][3].
 ```yaml
