@@ -1,5 +1,5 @@
 name: 'Dart Package Publisher'
-description: 'Continuously Publish Dart Package To Pub.dev'
+description: 'Continuously Test & Publish Dart Package To Pub.dev'
 author: 'k-paxian'
 branding:
   color: 'blue'
