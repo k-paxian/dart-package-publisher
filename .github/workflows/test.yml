@@ -33,8 +33,6 @@ jobs:
         with:
           channel: 'stable' # or: 'dev' or 'beta'
           
-      - run: flutter pub get
-  
       - name: '>> Flutter package <<'
         uses: k-paxian/dart-package-publisher@master
         with:
