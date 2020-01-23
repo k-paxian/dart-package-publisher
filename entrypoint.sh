@@ -25,6 +25,7 @@ switch_working_directory() {
 
 get_local_package_version() {
   if [ "$INPUT_FLUTTER" = "true" ]; then
+    ls "$FLUTTER_HOME"
     GET=`$FLUTTER_HOME/flutter pub get`
   else
     GET=`pub get`
