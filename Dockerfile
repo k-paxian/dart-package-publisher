@@ -1,11 +1,15 @@
-FROM cirrusci/flutter:stable
+FROM google/dart:latest
 
-USER root
+ARG FLUTTER_VERSION=v1.12.13+hotfix.5
 
-WORKDIR /home/cirrus
+RUN curl https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz --output /flutter.tar.xz && \
+	tar xf flutter.tar.xz && \
+	rm flutter.tar.xz
 
-COPY . /home/cirrus
+ENV PATH $PATH:/flutter/bin
 
-RUN chmod +x entrypoint.sh
+RUN flutter doctor
 
-ENTRYPOINT ["/home/cirrus/entrypoint.sh"]
+COPY . /
+
+ENTRYPOINT ["/entrypoint.sh"]
