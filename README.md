@@ -62,7 +62,7 @@ Package local version from pubspec.
 Package remote version from pub.dev.
 
 
-## Example usage
+## Dart package example usage
 
 ```yaml
 name: Publish to Pub.dev
@@ -73,7 +73,7 @@ jobs:
   publishing:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: 'Checkout'
         uses: actions/checkout@v2 # required!
         
       - name: '>> Dart package <<'
@@ -81,6 +81,26 @@ jobs:
         with:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+```
+
+## Flutter package example usage
+
+```yaml
+name: Publish to Pub.dev
+
+on: push
+
+jobs:
+  publishing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2 # required!
+
+      - name: 'Checkout Flutter'
+        uses: subosito/flutter-action@v1 # required!
+        with:
+          channel: 'stable' # or: 'dev' or 'beta'
 
       - name: '>> Flutter package <<'
         uses: k-paxian/dart-package-publisher@master
