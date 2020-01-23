@@ -24,7 +24,7 @@ switch_working_directory() {
 }
 
 get_local_package_version() {
-  if [ "$INPUT_FLUTTER" != "true" ]; then
+  if [ "$INPUT_FLUTTER" = "true" ]; then
     GET=`flutter pub get`
   else
     GET=`pub get`
@@ -33,7 +33,7 @@ get_local_package_version() {
   HAS_BUILD_TEST=`echo "$GET" | perl -n -e'/^\+ build_test (.*)/ && print $1'`
   HAS_TEST=`echo "$GET" | perl -n -e'/^\+ test (.*)/ && print $1'`
 
-  if [ "$INPUT_FLUTTER" != "true" ]; then
+  if [ "$INPUT_FLUTTER" = "true" ]; then
     OUT=`flutter pub deps`
   else
     OUT=`pub deps`
@@ -63,14 +63,14 @@ run_unit_tests() {
       if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ] && [ "$INPUT_SUPPRESSBUILDRUNNER" != "true" ]; then
         echo "build_runner: $HAS_BUILD_RUNNER"
         echo "build_test: $HAS_BUILD_TEST"
-        if [ "$INPUT_FLUTTER" != "true" ]; then
+        if [ "$INPUT_FLUTTER" = "true" ]; then
           flutter pub run build_runner test
         else
           pub run build_runner test
         fi
       else
         if [ "$HAS_TEST" != "" ]; then
-          if [ "$INPUT_FLUTTER" != "true" ]; then
+          if [ "$INPUT_FLUTTER" = "true" ]; then
             flutter pub run test
           else
             pub run test
@@ -83,7 +83,7 @@ run_unit_tests() {
 }
 
 get_remote_package_version() {
-  if [ "$INPUT_FLUTTER" != "true" ]; then
+  if [ "$INPUT_FLUTTER" = "true" ]; then
     OUT=`flutter pub global activate $PACKAGE`
   else
     OUT=`pub global activate $PACKAGE`
@@ -107,7 +107,7 @@ publish() {
       "expiration": 1577149838000
     }
 EOF
-    if [ "$INPUT_FLUTTER" != "true" ]; then
+    if [ "$INPUT_FLUTTER" = "true" ]; then
       flutter pub publish --dry-run
     else
       pub publish --dry-run
@@ -115,7 +115,7 @@ EOF
     if [ "$INPUT_DRYRUNONLY" = "true" ]; then
       echo "Dry run only, skip publishing."
     else
-      if [ "$INPUT_FLUTTER" != "true" ]; then
+      if [ "$INPUT_FLUTTER" = "true" ]; then
         flutter pub publish -f
       else
         pub lish -f
