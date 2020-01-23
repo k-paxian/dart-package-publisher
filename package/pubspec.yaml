@@ -12,3 +12,4 @@ dev_dependencies:
   build_runner: any
   build_test: any
   test: any
+  test_package: any

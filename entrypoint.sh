@@ -2,7 +2,7 @@
 
 set -e
 
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$PATH":"$HOME/.pub-cache/bin":"$GITHUB_WORKSPACE"
 
 check_inputs() {
   echo "Check inputs..."
