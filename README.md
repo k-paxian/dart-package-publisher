@@ -36,7 +36,12 @@ You can use `open ~/.pub-cache`.
 
 ### `skipTests`
 
-**Optional** . Skip unit tests run. Default: `false`
+**Optional** Skip unit tests run. Default: `false`
+
+### `suppressBuildRunner`
+
+**Optional** Suppress using `build_runner` for unit tests run. Default: `false`
+
 
 ## Outputs
 

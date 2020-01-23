@@ -6,14 +6,31 @@ jobs:
   package-publishing:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2 # required
-      - uses: k-paxian/dart-package-publisher@master
+      - name: 'Checkout'
+        uses: actions/checkout@v2 # required
+
+      - name: '>> Dart package <<'
+        uses: k-paxian/dart-package-publisher@master
         with:
           # Required:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           # Required:
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           # Optional:
+          suppresBuildRunner: true
+          # Optional:
           dryRunOnly: true 
           # Optional:
           relativePath: package
+
+      - name: '>> Flutter package <<'
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          # Required:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          # Required:
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          # Optional:
+          dryRunOnly: true
+          # Optional:
+          relativePath: flutter.package

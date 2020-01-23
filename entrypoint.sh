@@ -30,6 +30,7 @@ get_local_package_version() {
   HAS_TEST=`echo "$GET" | perl -n -e'/^\+ test (.*)/ && print $1'`
   OUT=`pub deps`
   PACKAGE_INFO=`echo "$OUT" | cut -d'|' -f1 | cut -d"'" -f1 | sed '/^\s*$/d'`
+  echo "Package info: $PACKAGE_INFO"
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
   lastIndex=`expr ${#lines[@]}-1`
   PACKAGE_INFO="${lines[$lastIndex]}"
@@ -49,7 +50,7 @@ run_unit_tests() {
     if [ "$INPUT_SKIPTESTS" = "true" ]; then
       echo "Skip unit tests set to true, skip unit testing."
     else
-      if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ]; then
+      if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ] && [ "$INPUT_SUPPRESSBUILDRUNNER" != "true" ]; then
         echo "build_runner: $HAS_BUILD_RUNNER"
         echo "build_test: $HAS_BUILD_TEST"
         pub run build_runner test
