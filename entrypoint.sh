@@ -2,7 +2,7 @@
 
 set -e
 
-export PATH="$PATH":"$HOME/.pub-cache/bin":"$GITHUB_WORKSPACE"
+export PATH="$PATH":"$HOME/.pub-cache/bin":"$FLUTTER_HOME"
 
 check_inputs() {
   echo "Check inputs..."
