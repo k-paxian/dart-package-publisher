@@ -2,7 +2,7 @@
 
 set -e
 
-export PATH="$PATH":"$HOME/.pub-cache/bin":"$FLUTTER_HOME"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 check_inputs() {
   echo "Check inputs..."
@@ -25,7 +25,7 @@ switch_working_directory() {
 
 get_local_package_version() {
   if [ "$INPUT_FLUTTER" = "true" ]; then
-    GET=`flutter pub get`
+    GET=`$FLUTTER_HOME/flutter pub get`
   else
     GET=`pub get`
   fi
