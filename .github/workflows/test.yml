@@ -17,7 +17,7 @@ jobs:
           # Required:
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           # Optional:
-          suppresBuildRunner: true
+          suppressBuildRunner: true
           # Optional:
           dryRunOnly: true 
           # Optional:
@@ -30,6 +30,8 @@ jobs:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           # Required:
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          # Optional:
+          flutter: true
           # Optional:
           dryRunOnly: true
           # Optional:
