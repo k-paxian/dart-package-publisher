@@ -23,16 +23,6 @@ jobs:
           # Optional:
           relativePath: package
 
-      - name: 'Java is a flutter-action dependency'
-        uses: actions/setup-java@v1
-        with:
-          java-version: '12.x'
-
-      - name: 'Checkout Flutter'
-        uses: subosito/flutter-action@v1.1.1
-        with:
-          channel: 'stable' # or: 'dev' or 'beta'
-          
       - name: '>> Flutter package <<'
         uses: k-paxian/dart-package-publisher@master
         with:

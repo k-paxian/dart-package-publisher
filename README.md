@@ -97,11 +97,6 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v2 # required!
 
-      - name: 'Checkout Flutter'
-        uses: subosito/flutter-action@v1 # required!
-        with:
-          channel: 'stable' # or: 'dev' or 'beta'
-
       - name: '>> Flutter package <<'
         uses: k-paxian/dart-package-publisher@master
         with:

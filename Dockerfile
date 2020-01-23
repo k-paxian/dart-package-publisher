@@ -1,7 +1,11 @@
-FROM google/dart:latest
+FROM cirrusci/flutter:stable
 
-COPY LICENSE README.md /
+USER root
 
-COPY entrypoint.sh /entrypoint.sh
+WORKDIR /home/cirrus
 
-ENTRYPOINT ["/entrypoint.sh"]
+COPY . /home/cirrus
+
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["/home/cirrus/entrypoint.sh"]
