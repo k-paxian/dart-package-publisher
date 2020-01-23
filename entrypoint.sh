@@ -39,15 +39,12 @@ get_local_package_version() {
     OUT=`pub deps`
   fi
 
-  #PACKAGE_INFO=`echo "$OUT" | cut -d'|' -f1 | cut -d"'" -f1 | sed '/^\s*$/d'`
-  #IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
-  #lastIndex=`expr ${#lines[@]}-1`
-  echo "out: $OUT"
-  #PACKAGE_INFO="${lines[$lastIndex]}"
-  
-  #PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`  
-  #LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
-  
+  PACKAGE_INFO=`echo "$OUT" | cut -d'|' -f1 | cut -d"'" -f1 | sed '/^\s*$/d'`
+  IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
+  lastIndex=`expr ${#lines[@]}-1`
+  PACKAGE_INFO="${lines[$lastIndex]}"  
+  PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`  
+  LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`  
   echo "Package: $PACKAGE"
   echo "Local version: [$LOCAL_PACKAGE_VERSION]"
   if [ -z "$PACKAGE" ]; then
