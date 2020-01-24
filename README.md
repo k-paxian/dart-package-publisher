@@ -32,7 +32,8 @@ You can use `open ~/.pub-cache`.
 
 ### `flutterVersion`
 
-**Optional** Declares a package as a Flutter package. Should contain valid Flutter version, like `v1.12.13+hotfix.5`. Default: undefined
+**Optional** Declares a package as a Flutter package. Should contain valid Flutter version, like `v1.12.13+hotfix.5` 
+Default: undefined
 
 ### `dryRunOnly`
 
@@ -102,7 +103,7 @@ jobs:
         with:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-          flutter: true
+          flutterVersion: 'v1.12.13+hotfix.5'
 ```
 
 [ci-badge]: https://github.com/k-paxian/dart-package-publisher/workflows/Workflow%20test/badge.svg
