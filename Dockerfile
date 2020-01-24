@@ -1,6 +1,6 @@
 FROM google/dart:latest
 
-ARG FLUTTER_VERSION
+ENV FLUTTER_VERSION
 
 RUN if [ "x$FLUTTER_VERSION" != "x" ] ; then apt-get update && \
 	apt-get install -y unzip xz-utils && \
