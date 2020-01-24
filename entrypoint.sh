@@ -2,6 +2,10 @@
 
 set -e
 
+if [ "$INPUT_FLUTTERVERSION" ]; then
+  INPUT_FLUTTER=true
+fi
+
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 check_inputs() {
