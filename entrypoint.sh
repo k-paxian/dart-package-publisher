@@ -33,6 +33,9 @@ get_local_package_version() {
   if [ -z "$HAS_BUILD_RUNNER" ]; then
     HAS_BUILD_RUNNER=`echo "$GET" | perl -n -e'/^Precompiled build_runner:(.*)./ && print $1'`
   fi
+  if [ -z "$HAS_BUILD_RUNNER" ]; then
+    HAS_BUILD_RUNNER=`echo "$GET" | perl -n -e'/^\+ build_runner (.*)/ && print $1'`
+  fi
   HAS_BUILD_TEST=`echo "$GET" | perl -n -e'/^\+ build_test (.*)/ && print $1'`
   HAS_TEST=`echo "$GET" | perl -n -e'/^\+ test (.*)/ && print $1'`
  
