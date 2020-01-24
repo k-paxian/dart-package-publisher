@@ -11,7 +11,7 @@ It's handy to hook it up on `push, pull_request` [events][3].
 ```yaml
 on: [push, pull_request]
 ```
-and forget about it. When you need to publish a package, just update the version in `pubspec.yaml`.
+and forget about it. When you need to publish a package, just bump the version in `pubspec.yaml`.
 
 ## Inputs
 
