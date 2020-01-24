@@ -2,13 +2,6 @@
 
 set -e
 
-INPUT_FLUTTER = true
-if [ -z "$INPUT_FLUTTERVERSION" ]; then
-  INPUT_FLUTTER = false
-else
-  echo "Flutter version: [$INPUT_FLUTTERVERSION]"
-fi
-
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 check_inputs() {
