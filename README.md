@@ -30,9 +30,9 @@ You can use `open ~/.pub-cache`.
 
 **Optional** Path to your package root in your repository. In case you have a mono-repo, like this [one][2]
 
-### `flutter`
+### `flutterVersion`
 
-**Optional** Declares a package as a Flutter package. Default: `false`
+**Optional** Declares a package as a Flutter package. Should contain valid Flutter version, like `v1.12.13+hotfix.5`. Default: undefined
 
 ### `dryRunOnly`
 
