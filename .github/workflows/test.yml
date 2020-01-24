@@ -12,27 +12,17 @@ jobs:
       - name: '>> Dart package <<'
         uses: k-paxian/dart-package-publisher@master
         with:
-          # Required:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
-          # Required:
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-          # Optional:
           suppressBuildRunner: true
-          # Optional:
           dryRunOnly: true 
-          # Optional:
           relativePath: package
 
       - name: '>> Flutter package <<'
         uses: k-paxian/dart-package-publisher@master
         with:
-          # Required:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
-          # Required:
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-          # Optional:
           flutter: true
-          # Optional:
           dryRunOnly: true
-          # Optional:
           relativePath: flutter.package
