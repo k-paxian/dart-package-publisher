@@ -30,10 +30,9 @@ You can use `open ~/.pub-cache`.
 
 **Optional** Path to your package root in your repository. In case you have a mono-repo, like this [one][2]
 
-### `flutterVersion`
+### `flutter`
 
-**Optional** Declares a package as a Flutter package. Should contain valid Flutter version, like `v1.12.13+hotfix.5` 
-Default: ''
+**Optional** Declares a package as a Flutter package. Default: `false`
 
 ### `dryRunOnly`
 
@@ -103,7 +102,7 @@ jobs:
         with:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-          flutterVersion: 'v1.12.13+hotfix.5'
+          flutter: true
 ```
 
 [ci-badge]: https://github.com/k-paxian/dart-package-publisher/workflows/Workflow%20test/badge.svg
