@@ -59,6 +59,9 @@ run_unit_tests() {
     if [ "$INPUT_SKIPTESTS" = "true" ]; then
       echo "Skip unit tests set to true, skip unit testing."
     else
+      echo "br = $HAS_BUILD_RUNNER"
+      echo "bt = $HAS_BUILD_TEST"
+      echo "su = $INPUT_SUPPRESSBUILDRUNNER"
       if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ] && [ "$INPUT_SUPPRESSBUILDRUNNER" != "true" ]; then
         echo "build_runner: $HAS_BUILD_RUNNER"
         echo "build_test: $HAS_BUILD_TEST"
