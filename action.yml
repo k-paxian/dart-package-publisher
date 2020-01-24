@@ -41,5 +41,5 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  env:
-    FLUTTER_VERSION: ${{ inputs.flutterVersion }}
+  args:
+    - ${{ inputs.flutterVersion }}
