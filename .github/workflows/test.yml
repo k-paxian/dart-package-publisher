@@ -31,7 +31,7 @@ jobs:
           # Required:
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           # Optional:
-          flutterVersion: 'v1.12.13+hotfix.5'
+          flutter: true
           # Optional:
           dryRunOnly: true
           # Optional:
