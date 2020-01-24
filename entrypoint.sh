@@ -30,11 +30,12 @@ get_local_package_version() {
     GET=`pub get`
   fi
   HAS_BUILD_RUNNER=`echo "$GET" | perl -n -e'/^Downloading build_runner (.*).../ && print $1'`
+  if [ -z "$HAS_BUILD_RUNNER" ]; then
+    HAS_BUILD_RUNNER=`echo "$GET" | perl -n -e'/^Precompiled build_runner:(.*)./ && print $1'`
+  fi
   HAS_BUILD_TEST=`echo "$GET" | perl -n -e'/^\+ build_test (.*)/ && print $1'`
   HAS_TEST=`echo "$GET" | perl -n -e'/^\+ test (.*)/ && print $1'`
-  
-  echo "$GET"
-  
+ 
   if [ "$INPUT_FLUTTER" = "true" ]; then
     OUT=`flutter pub deps`
   else
