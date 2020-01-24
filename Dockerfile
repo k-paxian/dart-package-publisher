@@ -1,7 +1,6 @@
 FROM google/dart:latest
 
-ARG FLUTTER_VERSION=$1
-RUN echo "fv=$FLUTTER_VERSION"
+ARG FLUTTER_VERSION=v1.12.13+hotfix.5
 RUN echo "1=$1"
 
 RUN if [ "x$FLUTTER_VERSION" != "x" ] ; then apt-get update && \
