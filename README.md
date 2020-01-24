@@ -2,7 +2,8 @@
 
 ## The Challenge
 
-Usually, when you are trying to `pub lish` your package and your `pubspec.yaml` has *the same* version as already published, you'll have a non zero exit code from `pub` tool. So you cannot directly put this command as an re-action `on: push` event. 
+Usually, when you are trying to `pub lish` your package and your `pubspec.yaml` has *the same* version as already published, you'll have a non zero exit code from `pub` tool. 
+So you cannot directly put this command as an re-action `on: push` event. 
 
 This Action is intended to solve this challenge by continuously Test & Publish Dart packages only **IF** local `pubspec.yml` has **different** version than already published on [Pub.dev](http://pub.dev) site.
 
