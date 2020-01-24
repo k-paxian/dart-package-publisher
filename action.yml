@@ -15,10 +15,10 @@ inputs:
     description: '(Optional) Path to your package root in your repository'
     required: false
     default: '.'
-  flutterVersion:
-    description: '(Optional) Declares a package as a Flutter package. Should contain valid Flutter version, like `v1.12.13+hotfix.5`'
+  flutter:
+    description: '(Optional) Declares a package as a Flutter package'
     required: false
-    default: ''
+    default: false
   dryRunOnly:
     description: '(Optional) Perform dry run only, no real publishing'
     required: false
@@ -41,5 +41,3 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.flutterVersion }}
