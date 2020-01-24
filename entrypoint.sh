@@ -2,7 +2,8 @@
 
 set -e
 
-if [ "$INPUT_FLUTTERVERSION" ]; then
+if [ "$INPUT_FLUTTERVERSION" != "" ]; then
+  echo "Flutter version: [$INPUT_FLUTTERVERSION]"
   INPUT_FLUTTER=true
 fi
 
