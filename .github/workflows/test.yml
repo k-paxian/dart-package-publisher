@@ -15,7 +15,6 @@ jobs:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           suppressBuildRunner: true
-          dryRunOnly: true 
           relativePath: package
 
       - name: '>> Flutter package <<'
@@ -24,5 +23,4 @@ jobs:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           flutter: true
-          dryRunOnly: true
           relativePath: flutter.package
