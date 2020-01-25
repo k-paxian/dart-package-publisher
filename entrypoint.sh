@@ -4,7 +4,7 @@ set -e
 
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
-check_inputs() {
+check_required_inputs() {
   echo "Check inputs..."
   if [ -z "$INPUT_ACCESSTOKEN" ]; then
     echo "Missing accessToken"
@@ -18,34 +18,23 @@ check_inputs() {
 }
 
 switch_working_directory() {
-  echo "Switching to package directory '$INPUT_RELATIVEPATH'"
-  cd "$INPUT_RELATIVEPATH"
+  if [ -z "$INPUT_RELATIVEPATH" ]; then
+  else
+    echo "Switching to package directory '$INPUT_RELATIVEPATH'"
+    cd "$INPUT_RELATIVEPATH"  
+  fi
   echo "Package dir: $PWD"
 }
 
 get_local_package_version() {
   if [ "$INPUT_FLUTTER" = "true" ]; then
-    GET=`flutter pub get`
+    GET_OUTPUT=`flutter pub get`
+    DEPS_OUTPUT=`flutter pub deps`
   else
-    GET=`pub get`
+    GET_OUTPUT=`pub get`
+    DEPS_OUTPUT=`pub deps`
   fi
-  HAS_BUILD_RUNNER=`echo "$GET" | perl -n -e'/^Downloading build_runner (.*).../ && print $1'`
-  if [ -z "$HAS_BUILD_RUNNER" ]; then
-    HAS_BUILD_RUNNER=`echo "$GET" | perl -n -e'/^Precompiled build_runner:(.*)./ && print $1'`
-  fi
-  if [ -z "$HAS_BUILD_RUNNER" ]; then
-    HAS_BUILD_RUNNER=`echo "$GET" | perl -n -e'/^\+ build_runner (.*)/ && print $1'`
-  fi
-  HAS_BUILD_TEST=`echo "$GET" | perl -n -e'/^\+ build_test (.*)/ && print $1'`
-  HAS_TEST=`echo "$GET" | perl -n -e'/^\+ test (.*)/ && print $1'`
- 
-  if [ "$INPUT_FLUTTER" = "true" ]; then
-    OUT=`flutter pub deps`
-  else
-    OUT=`pub deps`
-  fi
-
-  PACKAGE_INFO=`echo "$OUT" | cut -d'|' -f1 | cut -d"'" -f1 | sed '/^\s*$/d'`
+  PACKAGE_INFO=`echo "$DEPS_OUTPUT" | cut -d'|' -f1 | cut -d"'" -f1 | sed '/^\s*$/d'`
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
   lastIndex=`expr ${#lines[@]}-1`
   PACKAGE_INFO="${lines[$lastIndex]}"  
@@ -65,6 +54,19 @@ run_unit_tests() {
     if [ "$INPUT_SKIPTESTS" = "true" ]; then
       echo "Skip unit tests set to true, skip unit testing."
     else
+      HAS_BUILD_RUNNER=`echo "$GET_OUTPUT" | perl -n -e'/^Downloading build_runner (.*).../ && print $1'`
+      if [ -z "$HAS_BUILD_RUNNER" ]; then
+        HAS_BUILD_RUNNER=`echo "$GET_OUTPUT" | perl -n -e'/^Precompiled build_runner:(.*)./ && print $1'`
+        if [ "$HAS_BUILD_RUNNER" != ""] then
+          HAS_BUILD_RUNNER="[✓]"
+        fi
+      fi
+      if [ -z "$HAS_BUILD_RUNNER" ]; then
+        HAS_BUILD_RUNNER=`echo "$GET_OUTPUT" | perl -n -e'/^\+ build_runner (.*)/ && print $1'`
+      fi
+      HAS_BUILD_TEST=`echo "$GET_OUTPUT" | perl -n -e'/^\+ build_test (.*)/ && print $1'`
+      HAS_TEST=`echo "$GET_OUTPUT" | perl -n -e'/^\+ (test|flutter_test) (.*)/ && print $2'`
+    
       if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ] && [ "$INPUT_SUPPRESSBUILDRUNNER" != "true" ]; then
         echo "build_runner: $HAS_BUILD_RUNNER"
         echo "build_test: $HAS_BUILD_TEST"
@@ -76,7 +78,7 @@ run_unit_tests() {
       else
         if [ "$HAS_TEST" != "" ]; then
           if [ "$INPUT_FLUTTER" = "true" ]; then
-            flutter pub run test
+            flutter test
           else
             pub run test
           fi
@@ -89,11 +91,11 @@ run_unit_tests() {
 
 get_remote_package_version() {
   if [ "$INPUT_FLUTTER" = "true" ]; then
-    OUT=`flutter pub global activate $PACKAGE`
+    ACTIVATE_OUTPUT=`flutter pub global activate $PACKAGE`
   else
-    OUT=`pub global activate $PACKAGE`
+    ACTIVATE_OUTPUT=`pub global activate $PACKAGE`
   fi
-  REMOTE_PACKAGE_VERSION=`echo "$OUT" | perl -n -e'/^Activated .* (.*)\./ && print $1'`
+  REMOTE_PACKAGE_VERSION=`echo "$ACTIVATE_OUTPUT" | perl -n -e'/^Activated .* (.*)\./ && print $1'`
   echo "Remote version: [$REMOTE_PACKAGE_VERSION]"
   echo "::set-output name=remoteVersion::$REMOTE_PACKAGE_VERSION"
 }
@@ -117,6 +119,11 @@ EOF
     else
       pub publish --dry-run
     fi
+    if [ $? -eq 0 ] then
+      echo "Dry Run Successfull."
+    else
+      echo "Dry Run Failed, skip real publishing." >&2
+    fi    
     if [ "$INPUT_DRYRUNONLY" = "true" ]; then
       echo "Dry run only, skip publishing."
     else
@@ -129,7 +136,7 @@ EOF
   fi  
 }
 
-check_inputs
+check_required_inputs
 switch_working_directory
 get_local_package_version || true
 run_unit_tests
