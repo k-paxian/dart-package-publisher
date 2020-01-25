@@ -19,6 +19,7 @@ check_required_inputs() {
 
 switch_working_directory() {
   if [ -z "$INPUT_RELATIVEPATH" ]; then
+    :
   else
     echo "Switching to package directory '$INPUT_RELATIVEPATH'"
     cd "$INPUT_RELATIVEPATH"  
