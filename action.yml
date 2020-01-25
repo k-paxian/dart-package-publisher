@@ -14,7 +14,7 @@ inputs:
   relativePath:
     description: '(Optional) Path to your package root in your repository'
     required: false
-    default: '.'
+    default: ''
   flutter:
     description: '(Optional) Declares a package as a Flutter package'
     required: false
@@ -28,7 +28,7 @@ inputs:
     required: false
     default: false
   suppressBuildRunner:
-    description: '(Optional) Suppress using build_runner for unit tests run'
+    description: '(Optional) Suppress using `build_runner` for unit tests run'
     required: false
     default: false
 outputs:
@@ -38,6 +38,10 @@ outputs:
     description: 'Package local version from pubspec'
   remoteVersion:
     description: 'Package remote version from pub.dev'
+  dartVersion:
+    description: 'Dart SDK version which is being used to run tests & publish'
+  flutterVersion:
+    description: 'Flutter SDK version which is being used to run tests & publish'
 runs:
   using: 'docker'
   image: 'Dockerfile'
