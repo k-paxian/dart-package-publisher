@@ -56,15 +56,23 @@ You can use `open ~/.pub-cache`.
 
 ### `package`
 
-Package name from pubspec.
+Package name from pubspec
 
 ### `localVersion`
 
-Package local version from pubspec.
+Package local version from pubspec
 
 ### `remoteVersion`
 
-Package remote version from pub.dev.
+Package remote version from pub.dev
+
+### `dartVersion`
+
+Dart SDK version which is being used to run tests & publish
+
+### `flutterVersion`
+
+Flutter SDK version which is being used to run tests & publish
 
 
 ## Dart package example usage
