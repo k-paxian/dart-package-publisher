@@ -38,6 +38,9 @@ get_local_package_version() {
   PACKAGE_INFO=`echo "$DEPS_OUTPUT" | cut -d'|' -f1 | cut -d"'" -f1 | sed '/^\s*$/d'`
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
   lastIndex=`expr ${#lines[@]}-1`
+  
+  echo "$PACKAGE_INFO"
+  
   PACKAGE_INFO="${lines[$lastIndex]}"  
   PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`  
   LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`  
@@ -85,6 +88,9 @@ get_remote_package_version() {
     ACTIVATE_OUTPUT=`pub global activate $PACKAGE`
   fi
   REMOTE_PACKAGE_VERSION=`echo "$ACTIVATE_OUTPUT" | perl -n -e'/^Activated .* (.*)\./ && print $1'`
+  if [ -z "$REMOTE_PACKAGE_VERSION" ]; then
+    REMOTE_PACKAGE_VERSION="✗"
+  fi
   echo "Remote version: [$REMOTE_PACKAGE_VERSION]"
   echo "::set-output name=remoteVersion::$REMOTE_PACKAGE_VERSION"
 }
