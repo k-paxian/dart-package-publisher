@@ -38,18 +38,20 @@ get_local_package_version() {
   PACKAGE_INFO=`echo "$DEPS_OUTPUT" | cut -d'|' -f1 | cut -d"'" -f1 | sed '/^\s*$/d'`
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
   lastIndex=`expr ${#lines[@]}-1`
-  
-  echo "$PACKAGE_INFO"
-  
+  echo "$PACKAGE_INFO"  
+  DART_VERSION=`echo "$PACKAGE_INFO" | perl -n -e'/^Dart SDK (.*)$/ && print $1'`
+  FLUTTER_VERSION=`echo "$PACKAGE_INFO" | perl -n -e'/^Flutter SDK (.*)$/ && print $1'`
   PACKAGE_INFO="${lines[$lastIndex]}"  
   PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`  
   LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`  
-  echo "Package: $PACKAGE"
-  echo "Local version: [$LOCAL_PACKAGE_VERSION]"
   if [ -z "$PACKAGE" ]; then
     echo "No package found. :("
     exit 0
   fi  
+  echo "::set-output name=dartVersion::$DART_VERSION"
+  if [ "$FLUTTER_VERSION" != "" ]; then
+    echo "::set-output name=flutterVersion::$FLUTTER_VERSION"
+  fi
   echo "::set-output name=package::$PACKAGE"
   echo "::set-output name=localVersion::$LOCAL_PACKAGE_VERSION"
 }
@@ -91,6 +93,7 @@ get_remote_package_version() {
   if [ -z "$REMOTE_PACKAGE_VERSION" ]; then
     REMOTE_PACKAGE_VERSION="✗"
   fi
+  echo "Local version: [$LOCAL_PACKAGE_VERSION]"  
   echo "Remote version: [$REMOTE_PACKAGE_VERSION]"
   echo "::set-output name=remoteVersion::$REMOTE_PACKAGE_VERSION"
 }
