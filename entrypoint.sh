@@ -55,26 +55,10 @@ run_unit_tests() {
     if [ "$INPUT_SKIPTESTS" = "true" ]; then
       echo "Skip unit tests set to true, skip unit testing."
     else
-      HAS_BUILD_RUNNER=`echo "$GET_OUTPUT" | perl -n -e'/^Downloading build_runner (.*).../ && print $1'`
-      if [ -z "$HAS_BUILD_RUNNER" ]; then
-        HAS_BUILD_RUNNER=`echo "$GET_OUTPUT" | perl -n -e'/^Precompiled build_runner:(.*)./ && print $1'`
-        if [ "$HAS_BUILD_RUNNER" != "" ]; then
-          HAS_BUILD_RUNNER="[✓]"
-        fi
-      fi
-      if [ -z "$HAS_BUILD_RUNNER" ]; then
-        HAS_BUILD_RUNNER=`echo "$GET_OUTPUT" | perl -n -e'/^\+ build_runner (.*)/ && print $1'`
-      fi
-      HAS_BUILD_TEST=`echo "$GET_OUTPUT" | perl -n -e'/^\+ build_test (.*)/ && print $1'`
-      HAS_TEST=`echo "$GET_OUTPUT" | perl -n -e'/^\+ (test|flutter_test) (.*)/ && print $2'`
-      
-      echo "HAS_TEST = $HAS_TEST"
-      echo "$GET_OUTPUT"
-      echo "$DEPS_OUTPUT"
-    
+      HAS_BUILD_RUNNER=`echo "$DEPS_OUTPUT" | perl -n -e'/^.* build_runner (.*)/ && print $1'`
+      HAS_BUILD_TEST=`echo "$DEPS_OUTPUT" | perl -n -e'/^.* build_test (.*)/ && print $1'`
+      HAS_TEST=`echo "$DEPS_OUTPUT" | perl -n -e'/^.* test (.*)/ && print $1'`
       if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ] && [ "$INPUT_SUPPRESSBUILDRUNNER" != "true" ]; then
-        echo "build_runner: $HAS_BUILD_RUNNER"
-        echo "build_test: $HAS_BUILD_TEST"
         if [ "$INPUT_FLUTTER" = "true" ]; then
           flutter pub run build_runner test
         else
@@ -120,7 +104,7 @@ publish() {
     }
 EOF
     if [ "$INPUT_FLUTTER" = "true" ]; then
-      flutter pub lish --dry-run
+      flutter pub publish --dry-run
     else
       pub lish --dry-run
     fi
@@ -134,7 +118,7 @@ EOF
       echo "Dry run only, skip publishing."
     else
       if [ "$INPUT_FLUTTER" = "true" ]; then
-        flutter pub lish -f
+        flutter pub publish -f
       else
         pub lish -f
       fi
