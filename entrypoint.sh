@@ -120,21 +120,21 @@ publish() {
     }
 EOF
     if [ "$INPUT_FLUTTER" = "true" ]; then
-      flutter pub publish --dry-run
+      flutter pub lish --dry-run
     else
-      pub publish --dry-run
+      pub lish --dry-run
     fi
     if [ $? -eq 0 ]; then
       echo "Dry Run Successfull."
     else
       echo "Dry Run Failed, skip real publishing."
-      exit 1
+      exit 0
     fi    
     if [ "$INPUT_DRYRUNONLY" = "true" ]; then
       echo "Dry run only, skip publishing."
     else
       if [ "$INPUT_FLUTTER" = "true" ]; then
-        flutter pub publish -f
+        flutter pub lish -f
       else
         pub lish -f
       fi
