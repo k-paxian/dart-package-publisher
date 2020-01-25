@@ -120,7 +120,7 @@ EOF
     else
       pub publish --dry-run
     fi
-    if [ $? -eq 0 ] then
+    if [ $? -eq 0 ]; then
       echo "Dry Run Successfull."
     else
       echo "Dry Run Failed, skip real publishing." >&2
