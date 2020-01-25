@@ -67,6 +67,10 @@ run_unit_tests() {
       fi
       HAS_BUILD_TEST=`echo "$GET_OUTPUT" | perl -n -e'/^\+ build_test (.*)/ && print $1'`
       HAS_TEST=`echo "$GET_OUTPUT" | perl -n -e'/^\+ (test|flutter_test) (.*)/ && print $2'`
+      
+      echo "HAS_TEST = $HAS_TEST"
+      echo "$GET_OUTPUT"
+      echo "$DEPS_OUTPUT"
     
       if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ] && [ "$INPUT_SUPPRESSBUILDRUNNER" != "true" ]; then
         echo "build_runner: $HAS_BUILD_RUNNER"
@@ -123,7 +127,8 @@ EOF
     if [ $? -eq 0 ]; then
       echo "Dry Run Successfull."
     else
-      echo "Dry Run Failed, skip real publishing." >&2
+      echo "Dry Run Failed, skip real publishing."
+      exit 1
     fi    
     if [ "$INPUT_DRYRUNONLY" = "true" ]; then
       echo "Dry run only, skip publishing."
