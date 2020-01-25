@@ -58,7 +58,7 @@ run_unit_tests() {
       HAS_BUILD_RUNNER=`echo "$GET_OUTPUT" | perl -n -e'/^Downloading build_runner (.*).../ && print $1'`
       if [ -z "$HAS_BUILD_RUNNER" ]; then
         HAS_BUILD_RUNNER=`echo "$GET_OUTPUT" | perl -n -e'/^Precompiled build_runner:(.*)./ && print $1'`
-        if [ "$HAS_BUILD_RUNNER" != ""] then
+        if [ "$HAS_BUILD_RUNNER" != "" ]; then
           HAS_BUILD_RUNNER="[✓]"
         fi
       fi
