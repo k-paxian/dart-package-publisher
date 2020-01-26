@@ -32,6 +32,8 @@ inputs:
     required: false
     default: false
 outputs:
+  success:
+    description: 'Result, "true" if actual publishing happened, "false" otherwise'
   package:
     description: 'Package name from pubspec'
   localVersion:
