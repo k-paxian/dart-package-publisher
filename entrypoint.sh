@@ -62,7 +62,7 @@ run_unit_tests() {
     else
       HAS_BUILD_RUNNER=`echo "$DEPS_OUTPUT" | perl -n -e'/^.* build_runner (.*)/ && print $1'`
       HAS_BUILD_TEST=`echo "$DEPS_OUTPUT" | perl -n -e'/^.* build_test (.*)/ && print $1'`
-      HAS_TEST=`echo "$DEPS_OUTPUT" | perl -n -e'/^.* test (.*)/ && print $1'`
+      HAS_TEST=`echo "$DEPS_OUTPUT" | perl -n -e'/^.* (test|flutter_test) (.*)/ && print $2'`
       if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ] && [ "$INPUT_SUPPRESSBUILDRUNNER" != "true" ]; then
         if [ "$INPUT_FLUTTER" = "true" ]; then
           flutter pub run build_runner test
