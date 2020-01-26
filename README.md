@@ -54,6 +54,10 @@ You can use `open ~/.pub-cache`.
 
 ## Outputs
 
+### `success`
+
+Result, "true" if actual publishing happened, "false" otherwise
+
 ### `package`
 
 Package name from pubspec
