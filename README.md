@@ -3,7 +3,9 @@
 ## The Challenge
 
 Usually, when you are trying to `pub lish` your package and your `pubspec.yaml` has *the same* version as already published, you'll have a non zero exit code from `pub` tool and your workflow is **red**. 
-So you cannot directly hook publish command as an re-action to `on: push` event. To keep a workflow **green** on each push, you have to prevent publishing step if versions are the same, 
+So you cannot directly hook publish command as an re-action to `on: push` event. 
+
+To keep a workflow **green** on each push, you have to prevent publishing step if versions are the same, 
 and to compare versions, you should have both of them, remote and local.
 
 This Action is intended to solve this challenge by continuously Test & Publish Dart/Flutter packages only **IF** local `pubspec.yml` has **different** version than already published on [Pub.dev](http://pub.dev) site.
