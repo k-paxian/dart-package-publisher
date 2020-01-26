@@ -131,6 +131,11 @@ EOF
       else
         pub lish -f
       fi
+      if [ $? -eq 0 ]; then
+        echo "::set-output name=success::true"
+      else
+        echo "::set-output name=success::false"
+      fi      
     fi
   fi  
 }
