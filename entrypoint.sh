@@ -29,7 +29,9 @@ switch_working_directory() {
 
 detect_flutter_package() {
   GET_OUTPUT=`pub get`
+  echo "exit code: $?"
   USERS=`echo "$GET_OUTPUT" | perl -n -e'/^Flutter (.*) should run/ && print $1'` 
+  echo "OUT = $GET_OUTPUT"
   echo "USERS = $USERS"
   if [ "$USERS" = "users" ]; then
     INPUT_FLUTTER="true"
