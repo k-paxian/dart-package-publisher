@@ -15,10 +15,6 @@ inputs:
     description: '(Optional) Path to your package root in your repository'
     required: false
     default: ''
-  flutter:
-    description: '(Optional) Declares a package as a Flutter package'
-    required: false
-    default: false
   dryRunOnly:
     description: '(Optional) Perform dry run only, no real publishing'
     required: false
