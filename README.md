@@ -38,10 +38,6 @@ You can use `open ~/.pub-cache`.
 
 **Optional** Path to your package root in your repository. In case you have a mono-repo, like this [one][2]
 
-### `flutter`
-
-**Optional** Declares a package as a Flutter package. Default: `false`
-
 ### `dryRunOnly`
 
 **Optional** Perform dry run only, no real publishing. Default: `false`
@@ -82,7 +78,7 @@ Dart SDK version which is being used to run tests & publish
 Flutter SDK version which is being used to run tests & publish
 
 
-## Dart package example usage
+## Dart or Flutter package example usage
 
 ```yaml
 name: Publish to Pub.dev
@@ -101,28 +97,6 @@ jobs:
         with:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-```
-
-## Flutter package example usage
-
-```yaml
-name: Publish to Pub.dev
-
-on: push
-
-jobs:
-  publishing:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'Checkout'
-        uses: actions/checkout@v2 # required!
-
-      - name: '>> Flutter package <<'
-        uses: k-paxian/dart-package-publisher@master
-        with:
-          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
-          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-          flutter: true
 ```
 
 [ci-badge]: https://github.com/k-paxian/dart-package-publisher/workflows/Workflow%20test/badge.svg
