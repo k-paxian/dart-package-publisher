@@ -27,11 +27,12 @@ switch_working_directory() {
   echo "Package dir: $PWD"
 }
 
-detect_flutter() {
+detect_flutter_package() {
   GET_OUTPUT=`pub get`
   INPUT_FLUTTER=`echo "$GET_OUTPUT" | perl -n -e'/Flutter users should (.*) / && print $1'` 
+  echo "INPUT_FLUTTER = $INPUT_FLUTTER"
   if [ "$INPUT_FLUTTER" = "run" ]; then
-    INPUT_FLUTTER='true'
+    INPUT_FLUTTER="true"
     echo "Flutter package detected"
   fi
 }
@@ -151,7 +152,7 @@ EOF
 
 check_required_inputs
 switch_working_directory
-detect_flutter || true
+detect_flutter_package || true
 get_local_package_version || true
 run_unit_tests
 get_remote_package_version || true
