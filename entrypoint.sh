@@ -29,9 +29,9 @@ switch_working_directory() {
 
 detect_flutter_package() {
   GET_OUTPUT=`pub get`
-  INPUT_FLUTTER=`echo "$GET_OUTPUT" | perl -n -e'/Flutter users should (.*) / && print $1'` 
+  INPUT_FLUTTER=`echo "$GET_OUTPUT" | perl -n -e'/^Flutter (.*) should run/ && print $1'` 
   echo "INPUT_FLUTTER = $INPUT_FLUTTER"
-  if [ "$INPUT_FLUTTER" = "run" ]; then
+  if [ "$INPUT_FLUTTER" = "users" ]; then
     INPUT_FLUTTER="true"
     echo "Flutter package detected"
   fi
