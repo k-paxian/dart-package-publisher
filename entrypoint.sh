@@ -6,13 +6,16 @@ export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 check_required_inputs() {
   echo "Check inputs..."
-  if [ -z "$INPUT_ACCESSTOKEN" ]; then
-    echo "Missing accessToken"
-    exit 1
-  fi
-  if [ -z "$INPUT_REFRESHTOKEN" ]; then
-    echo "Missing refreshToken"
-    exit 1
+  if [ -z "$INPUT_CREDENTIALJSON" ]; then
+    echo "Missing credentialJson, trying tokens"
+    if [ -z "$INPUT_ACCESSTOKEN" ]; then
+      echo "Missing accessToken"
+      exit 1
+    fi
+    if [ -z "$INPUT_REFRESHTOKEN" ]; then
+      echo "Missing refreshToken"
+      exit 1
+    fi
   fi
   echo "OK"
 }
@@ -22,7 +25,7 @@ switch_working_directory() {
     :
   else
     echo "Switching to package directory '$INPUT_RELATIVEPATH'"
-    cd "$INPUT_RELATIVEPATH"  
+    cd "$INPUT_RELATIVEPATH"
   fi
   echo "Package dir: $PWD"
 }
@@ -46,16 +49,16 @@ get_local_package_version() {
   PACKAGE_INFO=`echo "$DEPS_OUTPUT" | cut -d'|' -f1 | cut -d"'" -f1 | sed '/^\s*$/d'`
   IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
   lastIndex=`expr ${#lines[@]}-1`
-  echo "$PACKAGE_INFO"  
+  echo "$PACKAGE_INFO"
   DART_VERSION=`echo "$PACKAGE_INFO" | perl -n -e'/^Dart SDK (.*)$/ && print $1'`
   FLUTTER_VERSION=`echo "$PACKAGE_INFO" | perl -n -e'/^Flutter SDK (.*)$/ && print $1'`
-  PACKAGE_INFO="${lines[$lastIndex]}"  
-  PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`  
-  LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`  
+  PACKAGE_INFO="${lines[$lastIndex]}"
+  PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`
+  LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
   if [ -z "$PACKAGE" ]; then
     echo "No package found. :("
     exit 0
-  fi  
+  fi
   echo "::set-output name=dartVersion::$DART_VERSION"
   if [ "$FLUTTER_VERSION" != "" ]; then
     echo "::set-output name=flutterVersion::$FLUTTER_VERSION"
@@ -86,8 +89,8 @@ run_unit_tests() {
           fi
         else
           echo "No unit test related dependencies detected, skip unit testing."
-        fi      
-      fi      
+        fi
+      fi
     fi
 }
 
@@ -101,7 +104,7 @@ get_remote_package_version() {
   if [ -z "$REMOTE_PACKAGE_VERSION" ]; then
     REMOTE_PACKAGE_VERSION="✗"
   fi
-  echo "Local version: [$LOCAL_PACKAGE_VERSION]"  
+  echo "Local version: [$LOCAL_PACKAGE_VERSION]"
   echo "Remote version: [$REMOTE_PACKAGE_VERSION]"
   echo "::set-output name=remoteVersion::$REMOTE_PACKAGE_VERSION"
 }
@@ -111,15 +114,19 @@ publish() {
     echo "Remote & Local versions are equal, skip publishing."
   else
     mkdir -p ~/.pub-cache
-    cat <<-EOF > ~/.pub-cache/credentials.json
-    {
-      "accessToken":"$INPUT_ACCESSTOKEN",
-      "refreshToken":"$INPUT_REFRESHTOKEN",
-      "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
-      "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
-      "expiration": 1577149838000
-    }
+    if [ -z "$INPUT_CREDENTIALJSON" ]; then
+      cat <<-EOF > ~/.pub-cache/credentials.json
+      {
+        "accessToken":"$INPUT_ACCESSTOKEN",
+        "refreshToken":"$INPUT_REFRESHTOKEN",
+        "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
+        "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
+        "expiration": 1577149838000
+      }
 EOF
+    else
+      echo "$INPUT_CREDENTIALJSON" > ~/.pub-cache/credentials.json
+    fi
     if [ "$INPUT_FLUTTER" = "true" ]; then
       flutter pub publish --dry-run
     else
@@ -130,7 +137,7 @@ EOF
     else
       echo "Dry Run Failed, skip real publishing."
       exit 0
-    fi    
+    fi
     if [ "$INPUT_DRYRUNONLY" = "true" ]; then
       echo "Dry run only, skip publishing."
     else
@@ -143,9 +150,9 @@ EOF
         echo "::set-output name=success::true"
       else
         echo "::set-output name=success::false"
-      fi      
+      fi
     fi
-  fi  
+  fi
 }
 
 check_required_inputs

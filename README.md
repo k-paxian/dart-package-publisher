@@ -1,8 +1,13 @@
 [![Build Status][ci-badge]][ci-badge-url]
 
+## Description
+
+Continuously Test & Publish Dart and Flutter Package To Pub.dev When Version Changed
+
 ## The Challenge
 
-Usually, when you are trying to `pub lish` your package and your `pubspec.yaml` has *the same* version as already published, you'll have a non zero exit code from `pub` tool and your workflow is **red**. 
+Usually, when you are trying to `pub lish` your Dart package (or `pub publish` your Flutter package) and your `pubspec.yaml` has *the same* version as already published, you'll have a non zero exit code from `pub` tool and 
+your workflow is **red**. 
 So you cannot directly hook publish command as an re-action to `on: push` event. 
 
 To keep a workflow **green** on each push, you have to prevent publishing step if versions are the same, 
@@ -15,6 +20,8 @@ It's handy to hook it up on `push, pull_request` [events][3].
 on: [push, pull_request]
 ```
 and forget about it. When you need to publish a package, just bump the version in `pubspec.yaml`.
+
+![dart-package-publisher](doc/images/dart-package-publisher.png)
 
 ## Inputs
 
@@ -33,6 +40,14 @@ Put it as `secrets.OAUTH_REFRESH_TOKEN` on your repo [secrets section][1]
 
 You can find the credentials.json within `.pub-cache` in the User's home directory.
 You can use `open ~/.pub-cache`.
+
+### `credentialJson`
+
+Replaces `accessToken` and `refreshToken` and contains the whole content of the `~/.pub-cache/credentials.json` file
+Put it as `secrets.CREDENTIAL_JSON` on your repo [secrets section][1]
+
+You can find the credentials.json within `.pub-cache` in the User's home directory.
+You can use `open ~/.pub-cache` after your first publication either through `pub lish` command for Dart or `pub publish` for Flutter.
 
 ### `relativePath`
 
