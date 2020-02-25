@@ -21,6 +21,8 @@ on: [push, pull_request]
 ```
 and forget about it. When you need to publish a package, just bump the version in `pubspec.yaml`.
 
+![dart-package-publisher](doc/images/dart-package-publisher.png)
+
 ## Inputs
 
 ### `accessToken`
