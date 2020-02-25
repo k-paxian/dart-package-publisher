@@ -1,5 +1,5 @@
-name: 'Dart Package Publisher'
-description: 'Continuously Test & Publish Dart Package To Pub.dev'
+name: 'Dart and Flutter Package Publisher'
+description: 'Continuously Test & Publish Dart and Flutter Package To Pub.dev When Version Changed'
 author: 'k-paxian'
 branding:
   color: 'blue'
@@ -11,6 +11,9 @@ inputs:
   refreshToken:
     description: '(Required) Token from ~/.pub-cache/credentials.json. Use secrets.OAUTH_REFRESH_TOKEN'
     required: true
+  credentialJson:
+    description: '(Optional) Overrides accessToken and refreshToken. Whole content of ~/.pub-cache/credentials.json. Use secrets.CREDENTIAL_JSON'
+    required: false
   relativePath:
     description: '(Optional) Path to your package root in your repository'
     required: false
