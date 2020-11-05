@@ -77,10 +77,10 @@ run_unit_tests() {
       if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ] && [ "$INPUT_SUPPRESSBUILDRUNNER" != "true" ]; then
         if [ "$INPUT_FLUTTER" = "true" ]; then
           echo "flutter tests with build_runner"
-          flutter pub run build_runner build
+          flutter pub run build_runner build --delete-conflicting-outputs
           flutter test
         else
-          pub run build_runner test
+          pub run build_runner test --delete-conflicting-outputs
         fi
       else
         if [ "$HAS_TEST" != "" ]; then
