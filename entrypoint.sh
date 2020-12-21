@@ -46,13 +46,11 @@ get_local_package_version() {
     GET_OUTPUT=`pub get`
     DEPS_OUTPUT=`pub deps`
   fi
-  PACKAGE_INFO=`echo "$DEPS_OUTPUT" | cut -d'|' -f1 | cut -d"'" -f1 | sed '/^\s*$/d'`
-  IFS=$'\n\r' read -d '' -r -a lines <<< "$PACKAGE_INFO"
-  lastIndex=`expr ${#lines[@]}-1`
+  PACKAGE_INFO=`echo "$DEPS_OUTPUT" | cut -d'|' -f1 | cut -d"'" -f1 | head -n 3`
   echo "$PACKAGE_INFO"
   DART_VERSION=`echo "$PACKAGE_INFO" | perl -n -e'/^Dart SDK (.*)$/ && print $1'`
   FLUTTER_VERSION=`echo "$PACKAGE_INFO" | perl -n -e'/^Flutter SDK (.*)$/ && print $1'`
-  PACKAGE_INFO="${lines[$lastIndex]}"
+  PACKAGE_INFO=`echo "$PACKAGE_INFO" | tail -1`
   PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`
   LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
   if [ -z "$PACKAGE" ]; then
@@ -111,6 +109,12 @@ get_remote_package_version() {
   echo "::set-output name=remoteVersion::$REMOTE_PACKAGE_VERSION"
 }
 
+format() {
+  if [ "$INPUT_FORMAT" = "true" ]; then
+      flutter format .
+  fi
+}
+
 publish() {
   if [ "$LOCAL_PACKAGE_VERSION" = "$REMOTE_PACKAGE_VERSION" ]; then
     echo "Remote & Local versions are equal, skip publishing."
@@ -163,4 +167,5 @@ detect_flutter_package || true
 get_local_package_version || true
 run_unit_tests
 get_remote_package_version || true
+format || true
 publish || true
