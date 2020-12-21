@@ -30,6 +30,10 @@ inputs:
     description: '(Optional) Suppress using `build_runner` for unit tests run'
     required: false
     default: false
+  format:
+    description: '(Optional) Format code of project to get better score in pub.dev'
+    required: false
+    default: false
 outputs:
   success:
     description: 'Result, "true" if actual publishing happened, "false" otherwise'
