@@ -65,6 +65,10 @@ You can use `open ~/.pub-cache` after your first publication either through `pub
 
 **Optional** Suppress using `build_runner` for unit tests run. Default: `false`
 
+### `format`
+
+**Optional** Format code of project to get better score in pub.dev. Default: `false`
+
 
 ## Outputs
 
