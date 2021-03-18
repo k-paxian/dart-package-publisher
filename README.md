@@ -69,6 +69,10 @@ You can use `open ~/.pub-cache` after your first publication either through `pub
 
 **Optional** Format code of project to get better score in pub.dev. Default: `false`
 
+### `force`
+
+**Optional** Force publishing even if pub tool throws warnings, hints, etc. Default: `false`
+
 
 ## Outputs
 
