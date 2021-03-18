@@ -34,6 +34,10 @@ inputs:
     description: '(Optional) Format code of project to get better score in pub.dev'
     required: false
     default: false
+  force:
+    description: '(Optional) Force publishing even if pub tool throws warnings, hints, etc'
+    required: false
+    default: false
 outputs:
   success:
     description: 'Result, "true" if actual publishing happened, "false" otherwise'
