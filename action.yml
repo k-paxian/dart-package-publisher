@@ -38,6 +38,10 @@ inputs:
     description: '(Optional) Force publishing even if pub tool throws warnings, hints, etc'
     required: false
     default: false
+  flutter:
+    description: '(Optional) Flutter package type'
+    required: false
+    default: false
 outputs:
   success:
     description: 'Result, "true" if actual publishing happened, "false" otherwise'
