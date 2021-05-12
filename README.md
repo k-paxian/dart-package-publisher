@@ -73,6 +73,10 @@ You can use `open ~/.pub-cache` after your first publication either through `pub
 
 **Optional** Force publishing even if pub tool throws warnings, hints, etc. Default: `false`
 
+### `flutter`
+
+**Optional** Flutter package type. Default: `false`
+
 
 ## Outputs
 
