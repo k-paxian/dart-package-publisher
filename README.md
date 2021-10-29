@@ -4,6 +4,10 @@
 
 Continuously Test & Publish Dart and Flutter Package To Pub.dev When Version Changed
 
+## Prerequisite
+
+You have to be a [Verified Publisher][4] to be able to publish from GH action w/o `Pub needs your authorization to upload packages on your behalf` check in console.
+
 ## The Challenge
 
 Usually, when you are trying to `pub lish` your Dart package (or `pub publish` your Flutter package) and your `pubspec.yaml` has *the same* version as already published, you'll have a non zero exit code from `pub` tool and 
@@ -131,3 +135,4 @@ jobs:
 [1]: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets
 [2]: https://github.com/k-paxian/dart-json-mapper
 [3]: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events
+[4]: https://dart.dev/tools/pub/verified-publishers
