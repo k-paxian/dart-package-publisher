@@ -143,7 +143,7 @@ EOF
     else
       if [ "$INPUT_FORCE" != "true" ]; then
         echo "Dry Run Failed, skip real publishing."
-        exit 0
+        exit 1
       fi
     fi
     if [ "$INPUT_DRYRUNONLY" = "true" ]; then
