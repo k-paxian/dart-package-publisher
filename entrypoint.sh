@@ -55,7 +55,7 @@ get_local_package_version() {
   LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
   if [ -z "$PACKAGE" ]; then
     echo "No package found. :("
-    exit 0
+    exit 1
   fi
   echo "::set-output name=dartVersion::$DART_VERSION"
   if [ "$FLUTTER_VERSION" != "" ]; then
@@ -166,7 +166,7 @@ EOF
 check_required_inputs
 switch_working_directory
 detect_flutter_package || true
-get_local_package_version || true
+get_local_package_version
 run_unit_tests
 get_remote_package_version || true
 format || true
