@@ -79,7 +79,7 @@ You can use `open ~/.pub-cache` after your first publication either through `pub
 
 ### `flutter`
 
-**Optional** Flutter package type. Default: `false`
+**Optional** Flutter package type. Default: `false`, when omitted auto detected
 
 
 ## Outputs
