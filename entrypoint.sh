@@ -111,7 +111,11 @@ get_remote_package_version() {
 
 format() {
   if [ "$INPUT_FORMAT" = "true" ]; then
+    if [ "$INPUT_FLUTTER" = "true" ]; then
       flutter format .
+    else
+      dart format .
+    fi
   fi
 }
 
