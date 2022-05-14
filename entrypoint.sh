@@ -31,7 +31,7 @@ switch_working_directory() {
 }
 
 detect_flutter_package() {
-  GET_OUTPUT=`pub get`
+  GET_OUTPUT=`dart pub get`
   if [ "$?" = 69 ]; then
     INPUT_FLUTTER="true"
     echo "Flutter package detected"
@@ -43,8 +43,8 @@ get_local_package_version() {
     GET_OUTPUT=`flutter pub get`
     DEPS_OUTPUT=`flutter pub deps`
   else
-    GET_OUTPUT=`pub get`
-    DEPS_OUTPUT=`pub deps`
+    GET_OUTPUT=`dart pub get`
+    DEPS_OUTPUT=`dart pub deps`
   fi
   PACKAGE_INFO=`echo "$DEPS_OUTPUT" | cut -d'|' -f1 | cut -d"'" -f1 | head -n 3`
   echo "$PACKAGE_INFO"
@@ -78,14 +78,14 @@ run_unit_tests() {
           flutter pub run build_runner build --delete-conflicting-outputs
           flutter test
         else
-          pub run build_runner test --delete-conflicting-outputs
+          dart pub run build_runner test --delete-conflicting-outputs
         fi
       else
         if [ "$HAS_TEST" != "" ]; then
           if [ "$INPUT_FLUTTER" = "true" ]; then
             flutter test
           else
-            pub run test
+            dart pub run test
           fi
         else
           echo "No unit test related dependencies detected, skip unit testing."
@@ -98,7 +98,7 @@ get_remote_package_version() {
   if [ "$INPUT_FLUTTER" = "true" ]; then
     ACTIVATE_OUTPUT=`flutter pub global activate $PACKAGE`
   else
-    ACTIVATE_OUTPUT=`pub global activate $PACKAGE`
+    ACTIVATE_OUTPUT=`dart pub global activate $PACKAGE`
   fi
   REMOTE_PACKAGE_VERSION=`echo "$ACTIVATE_OUTPUT" | perl -n -e'/^Activated .* (.*)\./ && print $1'`
   if [ -z "$REMOTE_PACKAGE_VERSION" ]; then
@@ -140,7 +140,7 @@ EOF
     if [ "$INPUT_FLUTTER" = "true" ]; then
       flutter pub publish --dry-run
     else
-      pub lish --dry-run
+      dart pub lish --dry-run
     fi
     if [ $? -eq 0 ]; then
       echo "Dry Run Successfull."
@@ -156,7 +156,7 @@ EOF
       if [ "$INPUT_FLUTTER" = "true" ]; then
         flutter pub publish -f
       else
-        pub lish -f
+        dart pub lish -f
       fi
       if [ $? -eq 0 ]; then
         echo "::set-output name=success::true"
