@@ -1,4 +1,4 @@
-FROM google/dart:latest
+FROM dart:latest
 
 # Installing prerequisites
 RUN apt-get update && \
