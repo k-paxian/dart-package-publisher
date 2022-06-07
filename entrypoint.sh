@@ -123,9 +123,9 @@ publish() {
   if [ "$LOCAL_PACKAGE_VERSION" = "$REMOTE_PACKAGE_VERSION" ]; then
     echo "Remote & Local versions are equal, skip publishing."
   else
-    mkdir -p ~/.config/dart
+    mkdir -p ~/.pub-cache
     if [ -z "$INPUT_CREDENTIALJSON" ]; then
-      cat <<-EOF > ~/.config/dart/credentials.json
+      cat <<-EOF > ~/.pub-cache/credentials.json
       {
         "accessToken":"$INPUT_ACCESSTOKEN",
         "refreshToken":"$INPUT_REFRESHTOKEN",
@@ -135,7 +135,7 @@ publish() {
       }
 EOF
     else
-      echo "$INPUT_CREDENTIALJSON" > ~/.config/dart/credentials.json
+      echo "$INPUT_CREDENTIALJSON" > ~/.pub-cache/credentials.json
     fi
     if [ "$INPUT_FLUTTER" = "true" ]; then
       flutter pub publish --dry-run
