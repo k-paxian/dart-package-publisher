@@ -145,7 +145,7 @@ EOF
     if [ $? -eq 0 ]; then
       echo "Dry Run Successfull."
     else
-      if [ "$INPUT_FORCE" != "true" ]; then
+      if [ "$INPUT_DRYRUNONLY" != "true" ]; then        
         echo "Dry Run Failed, skip real publishing."
         exit 1
       fi
