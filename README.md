@@ -27,6 +27,7 @@ and forget about it. When you need to publish a package, just bump the version i
 
 ![dart-package-publisher](doc/images/dart-package-publisher.png)
 
+
 ## Inputs 📥
 
 ### `accessToken`
@@ -34,16 +35,16 @@ and forget about it. When you need to publish a package, just bump the version i
 **Required** Google Account token from `~/.config/dart/pub-credentials.json` 
 Put it as `secrets.OAUTH_ACCESS_TOKEN` on your repo [secrets section][1]
 
-You can find the credentials.json within `.pub-cache` in the User's home directory.
-You can use `open ~/.pub-cache`.
+You can find the pub-credentials.json within `.config/dart` in the User's home directory.
+You can use `open ~/.config/dart`.
 
 ### `refreshToken`
 
 **Required** Google Account token from `~/.config/dart/pub-credentials.json` 
 Put it as `secrets.OAUTH_REFRESH_TOKEN` on your repo [secrets section][1]
 
-You can find the credentials.json within `.pub-cache` in the User's home directory.
-You can use `open ~/.pub-cache`.
+You can find the pub-credentials.json within `.config/dart` in the User's home directory.
+You can use `open ~/.config/dart`.
 
 ### `credentialJson`
 
@@ -51,7 +52,7 @@ Replaces `accessToken` and `refreshToken` and contains the whole content of the 
 Put it as `secrets.CREDENTIAL_JSON` on your repo [secrets section][1]
 
 You can find the `pub-credentials.json` within `.config/dart` in the User's home directory.
-You can use `open ~/.config/dart` after your first publication either through `pub lish` command for Dart or `pub publish` for Flutter.
+You can use `open ~/.config/dart` after your first publication either through `dart pub lish` command for Dart or `flutter pub publish` for Flutter.
 
 ### `relativePath`
 
@@ -80,6 +81,7 @@ You can use `open ~/.config/dart` after your first publication either through `p
 ### `flutter`
 
 **Optional** Flutter package type. Default: `false`, when omitted auto detected
+
 
 
 ## Outputs 📤
