@@ -11,10 +11,10 @@ You have to be a [Verified Publisher][4] to be able to publish from GH action w/
 ## The Challenge
 
 Usually, when you are trying to `pub lish` your Dart package (or `pub publish` your Flutter package) and your `pubspec.yaml` has *the same* version as already published, you'll have a non zero exit code from `pub` tool and 
-your workflow is **red**. 
+your workflow is **red** 🔴. 
 So you cannot directly hook publish command as an re-action to `on: push` event. 
 
-To keep a workflow **green** on each push, you have to prevent publishing step if versions are the same, 
+To keep a workflow **green** 🟢 on each push, you have to prevent publishing step if versions are the same, 
 and to compare versions, you should have both of them, remote and local.
 
 This Action is intended to solve this challenge by continuously Test & Publish Dart/Flutter packages only **IF** local `pubspec.yml` has **different** version than already published on [Pub.dev](http://pub.dev) site.
@@ -27,7 +27,7 @@ and forget about it. When you need to publish a package, just bump the version i
 
 ![dart-package-publisher](doc/images/dart-package-publisher.png)
 
-## Inputs
+## Inputs 📥
 
 ### `accessToken`
 
@@ -82,7 +82,7 @@ You can use `open ~/.config/dart` after your first publication either through `p
 **Optional** Flutter package type. Default: `false`, when omitted auto detected
 
 
-## Outputs
+## Outputs 📤
 
 ### `success`
 
