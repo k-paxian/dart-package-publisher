@@ -21,8 +21,10 @@ jobs:
       - name: '>> Flutter package <<'
         uses: k-paxian/dart-package-publisher@master
         with:
+          context: .
+          build-args: |
+            FLUTTER_BRANCH=dev
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-          flutterBranch: dev
           relativePath: flutter.package
           dryRunOnly: true
