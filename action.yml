@@ -42,6 +42,10 @@ inputs:
     description: '(Optional) Flutter package type'
     required: false
     default: false
+  flutterBranch:
+    description: '(Optional) Flutter branch to use, stable, master, main, dev, etc.
+    required: false
+    default: 'stable'
 outputs:
   success:
     description: 'Result, "true" if actual publishing happened, "false" otherwise'
