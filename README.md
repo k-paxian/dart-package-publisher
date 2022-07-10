@@ -82,6 +82,9 @@ You can use `open ~/.config/dart` after your first publication either through `d
 
 **Optional** Flutter package type. Default: `false`, when omitted auto detected
 
+### `flutterBranch`
+
+**Optional** Flutter branch to use, stable, master, main, dev, etc. Default: `stable`
 
 
 ## Outputs 📤
