@@ -1,5 +1,7 @@
 FROM dart:latest
 
+ENV FLUTTER_BRANCH
+RUN echo "Oh dang look at that $FLUTTER_BRANCH"
 ARG FLUTTER_BRANCH=stable
 
 # Installing prerequisites
