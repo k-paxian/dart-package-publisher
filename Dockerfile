@@ -1,7 +1,6 @@
 FROM dart:latest
 
 ARG FLUTTER_BRANCH=stable
-RUN echo "Oh dang look at that $FLUTTER_BRANCH"
 
 # Installing prerequisites
 RUN apt-get update && \
