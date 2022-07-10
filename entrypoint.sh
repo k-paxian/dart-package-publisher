@@ -33,7 +33,7 @@ switch_working_directory() {
 detect_flutter_package() {
   GET_OUTPUT=`dart pub get`
   HAS_FLUTTER_WARNING=`echo "$GET_OUTPUT" | perl -n -e'/^Flutter users should run(.*)$/ && print $1'`
-  echo "$HAS_FLUTTER_WARNING"
+  echo "$GET_OUTPUT"
   if [ "$?" = 69 ] || [ "$HAS_FLUTTER_WARNING" != "" ]; then
     INPUT_FLUTTER="true"
     echo "Flutter package detected"
