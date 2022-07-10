@@ -62,5 +62,3 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  env:
-    FLUTTER_BRANCH=${{ inputs.flutterBranch }}
