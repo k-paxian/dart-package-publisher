@@ -32,9 +32,9 @@ switch_working_directory() {
 
 detect_flutter_package() {
   GET_OUTPUT=`dart pub get`
-  if [ "$?" = 69 ] || [ "$GET_OUTPUT" = "Resolving dependencies..." ] || [ "$INPUT_FLUTTER"="true" ]; then
+  if [ "$?" = 69 ] || [ "$GET_OUTPUT" = "Resolving dependencies..." ] || [ "$INPUT_FLUTTER" = "true" ]; then
     INPUT_FLUTTER="true"
-    echo "Flutter package detected"
+    echo "Flutter package detected. Installing Flutter from $INPUT_FLUTTERBRANCH branch..."
     git clone -b $INPUT_FLUTTERBRANCH --depth 1 https://github.com/flutter/flutter.git /flutter
     flutter doctor
   fi
