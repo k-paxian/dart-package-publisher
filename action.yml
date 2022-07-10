@@ -63,4 +63,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - FLUTTER_BRANCH=${{ inputs.flutterBranch }}
+    - ${{ inputs.flutterBranch }}
