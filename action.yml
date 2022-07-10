@@ -43,7 +43,7 @@ inputs:
     required: false
     default: false
   flutterBranch:
-    description: '(Optional) Flutter branch to use, stable, master, main, dev, etc.
+    description: '(Optional) Flutter branch to use, stable, master, main, dev, etc.'
     required: false
     default: 'stable'
 outputs:
