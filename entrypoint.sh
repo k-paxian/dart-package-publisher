@@ -32,10 +32,7 @@ switch_working_directory() {
 
 detect_flutter_package() {
   GET_OUTPUT=`dart pub get`
-  HAS_FLUTTER_WARNING=`echo "$GET_OUTPUT" | perl -n -e'/^Because (.*) requires the Flutter SDK, version solving failed.$/ && print $1'`
-  echo ">:: $GET_OUTPUT"
-  echo "::<"
-  if [ "$?" = 69 ] || [ "$HAS_FLUTTER_WARNING" != "" ]; then
+  if [ "$?" = 69 ] || [ "$GET_OUTPUT" = "Resolving dependencies..." ]; then
     INPUT_FLUTTER="true"
     echo "Flutter package detected"
   fi
