@@ -62,6 +62,10 @@ You can use `open ~/.config/dart` after your first publication either through `d
 
 **Optional** Perform dry run only, no real publishing. Default: `false`
 
+### `testRunOnly`
+
+**Optional** Perform unit tests run only, no real publishing. Default: `false`
+
 ### `skipTests`
 
 **Optional** Skip unit tests run. Default: `false`
