@@ -14,7 +14,7 @@ jobs:
         with:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-          dryRunOnly: true
+          testRunOnly: true
           suppressBuildRunner: true
           relativePath: package
 
@@ -25,4 +25,4 @@ jobs:
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           relativePath: flutter.package
           flutterBranch: dev
-          dryRunOnly: true
+          testRunOnly: true
