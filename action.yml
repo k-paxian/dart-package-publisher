@@ -22,6 +22,10 @@ inputs:
     description: '(Optional) Perform dry run only, no real publishing'
     required: false
     default: false
+  testRunOnly:
+    description: '(Optional) Perform unit tests run only, no real publishing'
+    required: false
+    default: false
   skipTests:
     description: '(Optional) Skip unit tests run'
     required: false
