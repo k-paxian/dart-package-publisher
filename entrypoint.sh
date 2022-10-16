@@ -62,10 +62,10 @@ get_local_package_version() {
   fi
   echo "dartVersion=$DART_VERSION" >> $GITHUB_OUTPUT
   if [ "$FLUTTER_VERSION" != "" ]; then
-    echo "::set-output name=flutterVersion::$FLUTTER_VERSION"
+    echo "flutterVersion=$FLUTTER_VERSION" >> $GITHUB_OUTPUT
   fi
   echo "package=$PACKAGE" >> $GITHUB_OUTPUT
-  echo "::set-output name=localVersion::$LOCAL_PACKAGE_VERSION"
+  echo "localVersion=$LOCAL_PACKAGE_VERSION" >> $GITHUB_OUTPUT
 }
 
 run_unit_tests() {
@@ -109,7 +109,7 @@ get_remote_package_version() {
   fi
   echo "Local version: [$LOCAL_PACKAGE_VERSION]"
   echo "Remote version: [$REMOTE_PACKAGE_VERSION]"
-  echo "::set-output name=remoteVersion::$REMOTE_PACKAGE_VERSION"
+  echo "remoteVersion=$REMOTE_PACKAGE_VERSION" >> $GITHUB_OUTPUT
 }
 
 format() {
@@ -162,9 +162,9 @@ EOF
         dart pub lish -f
       fi
       if [ $? -eq 0 ]; then
-        echo "::set-output name=success::true"
+        echo "success=true" >> $GITHUB_OUTPUT
       else
-        echo "::set-output name=success::false"
+        echo "success=false" >> $GITHUB_OUTPUT
       fi
     fi
   fi
