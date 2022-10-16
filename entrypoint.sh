@@ -60,11 +60,11 @@ get_local_package_version() {
     echo "No package found. :("
     exit 1
   fi
-  echo "::set-output name=dartVersion::$DART_VERSION"
+  echo "dartVersion=$DART_VERSION" >> $GITHUB_OUTPUT
   if [ "$FLUTTER_VERSION" != "" ]; then
     echo "::set-output name=flutterVersion::$FLUTTER_VERSION"
   fi
-  echo "::set-output name=package::$PACKAGE"
+  echo "package=$PACKAGE" >> $GITHUB_OUTPUT
   echo "::set-output name=localVersion::$LOCAL_PACKAGE_VERSION"
 }
 
