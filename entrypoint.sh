@@ -58,6 +58,7 @@ get_local_package_version() {
   LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
   if [ -z "$PACKAGE" ]; then
     echo "No package found. :("
+    echo "No package found. :(" >> $GITHUB_STEP_SUMMARY
     exit 1
   fi
   echo "dartVersion=$DART_VERSION" >> $GITHUB_OUTPUT
@@ -92,6 +93,7 @@ run_unit_tests() {
           fi
         else
           echo "No unit test related dependencies detected, skip unit testing."
+          echo "No unit test related dependencies detected, skip unit testing." >> $GITHUB_STEP_SUMMARY
         fi
       fi
     fi
@@ -108,7 +110,9 @@ get_remote_package_version() {
     REMOTE_PACKAGE_VERSION="✗"
   fi
   echo "Local version: [$LOCAL_PACKAGE_VERSION]"
+  echo "Local version: [$LOCAL_PACKAGE_VERSION]" >> $GITHUB_STEP_SUMMARY
   echo "Remote version: [$REMOTE_PACKAGE_VERSION]"
+  echo "Remote version: [$REMOTE_PACKAGE_VERSION]" >> $GITHUB_STEP_SUMMARY
   echo "remoteVersion=$REMOTE_PACKAGE_VERSION" >> $GITHUB_OUTPUT
 }
 
@@ -125,6 +129,7 @@ format() {
 publish() {
   if [ "$LOCAL_PACKAGE_VERSION" = "$REMOTE_PACKAGE_VERSION" ]; then
     echo "Remote & Local versions are equal, skip publishing."
+    echo "Remote & Local versions are equal, skip publishing." >> $GITHUB_STEP_SUMMARY
   else
     mkdir -p ~/.config/dart
     if [ -z "$INPUT_CREDENTIALJSON" ]; then
@@ -150,11 +155,13 @@ EOF
     else
       if [ "$INPUT_FORCE" != "true" ] && [ "$INPUT_TESTRUNONLY" != "true" ]; then
         echo "Dry Run Failed, skip real publishing."
+        echo "Dry Run Failed, skip real publishing." >> $GITHUB_STEP_SUMMARY
         exit 1
       fi
     fi
     if [ "$INPUT_DRYRUNONLY" = "true" ]; then
       echo "Dry run only, skip publishing."
+      echo "Dry run only, skip publishing." >> $GITHUB_STEP_SUMMARY
     else
       if [ "$INPUT_FLUTTER" = "true" ]; then
         flutter pub publish -f
@@ -163,8 +170,10 @@ EOF
       fi
       if [ $? -eq 0 ]; then
         echo "success=true" >> $GITHUB_OUTPUT
+        echo ":rocket:" >> $GITHUB_STEP_SUMMARY
       else
         echo "success=false" >> $GITHUB_OUTPUT
+        echo ":red_circle:" >> $GITHUB_STEP_SUMMARY
       fi
     fi
   fi
