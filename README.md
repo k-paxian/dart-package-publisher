@@ -130,7 +130,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v2 # required!
+        uses: actions/checkout@main # required!
         
       - name: '>> Dart package <<'
         uses: k-paxian/dart-package-publisher@master
