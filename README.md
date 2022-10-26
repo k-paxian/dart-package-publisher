@@ -19,9 +19,9 @@ and to compare versions, you should have both of them, remote and local.
 
 This Action is intended to solve this challenge by continuously Test & Publish Dart/Flutter packages only **IF** local `pubspec.yml` has **different** version than already published on [Pub.dev](http://pub.dev) site.
 
-It's handy to hook it up on `push, pull_request` [events][3].
+It's handy to hook it up on `push` [events][3].
 ```yaml
-on: [push, pull_request]
+on: push
 ```
 and forget about it. When you need to publish a package, just bump the version in `pubspec.yaml`.
 
