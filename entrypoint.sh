@@ -181,10 +181,10 @@ EOF
       fi
       if [ $? -eq 0 ]; then
         echo "success=true" >> $GITHUB_OUTPUT
-        trace ":rocket:" "🚀"
+        trace "🚀" "🚀"
       else
         echo "success=false" >> $GITHUB_OUTPUT
-        trace ":red_circle:" "❌"
+        trace "❌" "❌"
       fi
     fi
   fi
