@@ -4,16 +4,33 @@ set -e
 
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
+trace() {
+  local message=$1
+	local summary=$2
+
+  if [ -z "$message" ]; then
+    :
+  else
+    echo "$message"
+  fi
+
+  if [ -z "$summary" ]; then
+    :
+  else
+    echo "$summary" >> $GITHUB_STEP_SUMMARY
+  fi
+}
+
 check_required_inputs() {
-  echo "Check inputs..."
+  trace "🔑 Check credentials..."
   if [ -z "$INPUT_CREDENTIALJSON" ]; then
-    echo "Missing credentialJson, trying tokens"
+    trace "Missing credentialJson, trying tokens"
     if [ -z "$INPUT_ACCESSTOKEN" ]; then
-      echo "Missing accessToken"
+      trace "Missing accessToken"
       exit 1
     fi
     if [ -z "$INPUT_REFRESHTOKEN" ]; then
-      echo "Missing refreshToken"
+      trace "Missing refreshToken"
       exit 1
     fi
   fi
@@ -129,7 +146,7 @@ format() {
 publish() {
   if [ "$LOCAL_PACKAGE_VERSION" = "$REMOTE_PACKAGE_VERSION" ]; then
     echo "::notice::Remote & Local versions are equal, skip publishing."
-    echo "Remote & Local versions are equal, skip publishing." >> $GITHUB_STEP_SUMMARY
+    echo "📝Remote & Local versions are equal, skip publishing." >> $GITHUB_STEP_SUMMARY
   else
     mkdir -p ~/.config/dart
     if [ -z "$INPUT_CREDENTIALJSON" ]; then
@@ -160,8 +177,8 @@ EOF
       fi
     fi
     if [ "$INPUT_DRYRUNONLY" = "true" ]; then
-      echo "::notice::Dry run only, skip publishing."
-      echo "Dry run only, skip publishing." >> $GITHUB_STEP_SUMMARY
+      echo "::notice::Dry 🏃‍♂️ only, skip publishing."
+      echo "Dry 🏃‍♂️ only, skip publishing." >> $GITHUB_STEP_SUMMARY
     else
       if [ "$INPUT_FLUTTER" = "true" ]; then
         flutter pub publish -f
