@@ -26,25 +26,24 @@ check_required_inputs() {
   if [ -z "$INPUT_CREDENTIALJSON" ]; then
     trace "Missing credentialJson, trying tokens"
     if [ -z "$INPUT_ACCESSTOKEN" ]; then
-      trace "Missing accessToken"
+      trace "❌ Missing accessToken"
       exit 1
     fi
     if [ -z "$INPUT_REFRESHTOKEN" ]; then
-      trace "Missing refreshToken"
+      trace "❌ Missing refreshToken"
       exit 1
     fi
   fi
-  echo "OK"
 }
 
 switch_working_directory() {
   if [ -z "$INPUT_RELATIVEPATH" ]; then
     :
   else
-    echo "Switching to package directory '$INPUT_RELATIVEPATH'"
+    trace "Switching to package directory '$INPUT_RELATIVEPATH'"
     cd "$INPUT_RELATIVEPATH"
   fi
-  echo "Package dir: $PWD"
+  trace "Package dir: $PWD"
 }
 
 detect_flutter_package() {
@@ -52,7 +51,7 @@ detect_flutter_package() {
   if [ "$?" = 69 ] || [ "$GET_OUTPUT" = "Resolving dependencies..." ] || [ "$INPUT_FLUTTER" = "true" ]; then
     INPUT_FLUTTER="true"
     export PATH="$PATH":"/flutter/bin"
-    echo "Flutter package detected. Installing Flutter from $INPUT_FLUTTERBRANCH branch..."
+    trace "Flutter package detected. Installing Flutter from $INPUT_FLUTTERBRANCH branch..."
     git clone -b $INPUT_FLUTTERBRANCH --depth 1 https://github.com/flutter/flutter.git /flutter
     flutter doctor
   fi
@@ -67,15 +66,14 @@ get_local_package_version() {
     DEPS_OUTPUT=`dart pub deps`
   fi
   PACKAGE_INFO=`echo "$DEPS_OUTPUT" | cut -d'|' -f1 | cut -d"'" -f1 | head -n 3`
-  echo "$PACKAGE_INFO"
+  trace "$PACKAGE_INFO"
   DART_VERSION=`echo "$PACKAGE_INFO" | perl -n -e'/^Dart SDK (.*)$/ && print $1'`
   FLUTTER_VERSION=`echo "$PACKAGE_INFO" | perl -n -e'/^Flutter SDK (.*)$/ && print $1'`
   PACKAGE_INFO=`echo "$PACKAGE_INFO" | tail -1`
   PACKAGE=`echo "$PACKAGE_INFO" | cut -d' ' -f1`
   LOCAL_PACKAGE_VERSION=`echo "$PACKAGE_INFO" | cut -d' ' -f2`
   if [ -z "$PACKAGE" ]; then
-    echo "::error::No package found. :("
-    echo "No package found. :(" >> $GITHUB_STEP_SUMMARY
+    trace "::error::No package found. :(" "❌ No package found. :("
     exit 1
   fi
   echo "dartVersion=$DART_VERSION" >> $GITHUB_OUTPUT
@@ -88,14 +86,14 @@ get_local_package_version() {
 
 run_unit_tests() {
     if [ "$INPUT_SKIPTESTS" = "true" ]; then
-      echo "::notice::Skip unit tests set to true, skip unit testing."
+      trace "::notice::Skip unit tests set to true, skip unit testing."
     else
       HAS_BUILD_RUNNER=`echo "$DEPS_OUTPUT" | perl -n -e'/^.* build_runner (.*)/ && print $1'`
       HAS_BUILD_TEST=`echo "$DEPS_OUTPUT" | perl -n -e'/^.* build_test (.*)/ && print $1'`
       HAS_TEST=`echo "$DEPS_OUTPUT" | perl -n -e'/^.* (test|flutter_test) (.*)/ && print $2'`
       if [ "$HAS_BUILD_RUNNER" != "" ] && [ "$HAS_BUILD_TEST" != "" ] && [ "$INPUT_SUPPRESSBUILDRUNNER" != "true" ]; then
         if [ "$INPUT_FLUTTER" = "true" ]; then
-          echo "::notice::flutter tests with build_runner"
+          trace "::notice::flutter tests with build_runner"
           flutter pub run build_runner build --delete-conflicting-outputs
           flutter test
         else
@@ -109,8 +107,7 @@ run_unit_tests() {
             dart pub run test
           fi
         else
-          echo "::notice::No unit test related dependencies detected, skip unit testing."
-          echo "No unit test related dependencies detected, skip unit testing." >> $GITHUB_STEP_SUMMARY
+          trace "::notice::No unit test related dependencies detected, skip unit testing." "No unit test related dependencies detected, skip unit testing."
         fi
       fi
     fi
@@ -126,10 +123,8 @@ get_remote_package_version() {
   if [ -z "$REMOTE_PACKAGE_VERSION" ]; then
     REMOTE_PACKAGE_VERSION="✗"
   fi
-  echo "::notice::Local version: [$LOCAL_PACKAGE_VERSION]"
-  echo "Local version: [$LOCAL_PACKAGE_VERSION]" >> $GITHUB_STEP_SUMMARY
-  echo "::notice::Remote version: [$REMOTE_PACKAGE_VERSION]"
-  echo "Remote version: [$REMOTE_PACKAGE_VERSION]" >> $GITHUB_STEP_SUMMARY
+  trace "::notice::Local version: [$LOCAL_PACKAGE_VERSION]" "Local version: [$LOCAL_PACKAGE_VERSION]"
+  trace "::notice::Remote version: [$REMOTE_PACKAGE_VERSION]" "Remote version: [$REMOTE_PACKAGE_VERSION]"
   echo "remoteVersion=$REMOTE_PACKAGE_VERSION" >> $GITHUB_OUTPUT
 }
 
@@ -145,8 +140,7 @@ format() {
 
 publish() {
   if [ "$LOCAL_PACKAGE_VERSION" = "$REMOTE_PACKAGE_VERSION" ]; then
-    echo "::notice::Remote & Local versions are equal, skip publishing."
-    echo "📝Remote & Local versions are equal, skip publishing." >> $GITHUB_STEP_SUMMARY
+    trace "::notice::Remote & Local versions are equal, skip publishing." "📝Remote & Local versions are equal, skip publishing."
   else
     mkdir -p ~/.config/dart
     if [ -z "$INPUT_CREDENTIALJSON" ]; then
@@ -168,18 +162,17 @@ EOF
       dart pub lish --dry-run
     fi
     if [ $? -eq 0 ]; then
-      echo "::notice::Dry Run Successfull."
+      trace "::notice::Dry 🏃 Successfull."
     else
       if [ "$INPUT_FORCE" != "true" ] && [ "$INPUT_TESTRUNONLY" != "true" ]; then
-        echo "::error::Dry Run Failed, skip real publishing."
-        echo "Dry Run Failed, skip real publishing." >> $GITHUB_STEP_SUMMARY
+        trace "::error::Dry 🏃 Failed, skip real publishing." "❌ Dry 🏃 Failed, skip real publishing."
         exit 1
       fi
     fi
     if [ "$INPUT_DRYRUNONLY" = "true" ]; then
-      echo "::notice::Dry 🏃‍♂️ only, skip publishing."
-      echo "Dry 🏃‍♂️ only, skip publishing." >> $GITHUB_STEP_SUMMARY
+      trace "::notice::Dry 🏃 only, skip publishing." "Dry 🏃 only, skip publishing."
     else
+      trace "📦 Publishing..."
       if [ "$INPUT_FLUTTER" = "true" ]; then
         flutter pub publish -f
       else
@@ -187,10 +180,10 @@ EOF
       fi
       if [ $? -eq 0 ]; then
         echo "success=true" >> $GITHUB_OUTPUT
-        echo ":rocket:" >> $GITHUB_STEP_SUMMARY
+        trace ":rocket:" "🚀"
       else
         echo "success=false" >> $GITHUB_OUTPUT
-        echo ":red_circle:" >> $GITHUB_STEP_SUMMARY
+        trace ":red_circle:" "❌"
       fi
     fi
   fi
