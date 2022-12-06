@@ -156,6 +156,7 @@ EOF
     else
       echo "$INPUT_CREDENTIALJSON" > ~/.config/dart/pub-credentials.json
     fi
+    trace "Dry 🏃..."
     if [ "$INPUT_FLUTTER" = "true" ]; then
       flutter pub publish --dry-run
     else
