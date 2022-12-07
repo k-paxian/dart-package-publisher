@@ -6,7 +6,7 @@ export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 trace() {
   local message=$1
-	local summary=$2
+  local summary=$2
 
   if [ -z "$message" ]; then
     :
