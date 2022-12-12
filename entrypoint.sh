@@ -24,7 +24,7 @@ trace() {
 check_required_inputs() {
   trace "🔑 Check credentials..."
   if [ -z "$INPUT_CREDENTIALJSON" ]; then
-    trace "Missing credentialJson, trying tokens"
+    trace "Missing credentialJson, using tokens"
     if [ -z "$INPUT_ACCESSTOKEN" ]; then
       trace "❌ Missing accessToken"
       exit 1
