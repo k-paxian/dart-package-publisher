@@ -28,6 +28,10 @@ and forget about it. When you need to publish a package, just bump the version i
 ![dart-package-publisher](doc/images/dart-package-publisher.png)
 
 
+## The Firehose
+
+Finally, after 3 years of silence Google did that job in house :smile: [firehose][5]
+
 ## Inputs 📥
 
 ### `accessToken`
@@ -145,3 +149,4 @@ jobs:
 [2]: https://github.com/k-paxian/dart-json-mapper
 [3]: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events
 [4]: https://dart.dev/tools/pub/verified-publishers
+[5]: https://github.com/dart-lang/ecosystem/tree/main/pkgs/firehose
