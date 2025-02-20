@@ -136,7 +136,7 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@main # required!
         
-      - name: '>> Dart package <<'
+      - name: 'Dart package'
         uses: k-paxian/dart-package-publisher@master
         with:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
