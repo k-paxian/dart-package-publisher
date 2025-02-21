@@ -52,7 +52,7 @@ detect_flutter_package() {
     INPUT_FLUTTER="true"
     export PATH="$PATH":"/flutter/bin"
     trace "Flutter package detected. Installing Flutter from $INPUT_FLUTTERBRANCH branch..."
-    git clone -b $INPUT_FLUTTERBRANCH --depth 1 https://github.com/flutter/flutter.git /flutter
+    git clone -b $INPUT_FLUTTERBRANCH https://github.com/flutter/flutter.git /flutter
     flutter doctor
   fi
 }
